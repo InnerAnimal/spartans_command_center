@@ -62,6 +62,8 @@ create_bucket_structure() {
     # Set the project
     gcloud config set project "$project_id"
     
+    print_status "✅ Configured project Meauxbility-Core (ID: gen-lang-client-0938727621, Number: 254316571351, Region: us-central1)"
+    
     # Create main buckets with optimized settings
     local buckets=(
         "meauxbility-media"

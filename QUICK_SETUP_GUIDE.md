@@ -175,11 +175,13 @@ GOOGLE_CLIENT_SECRET=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
 GA4_MEASUREMENT_ID=G-R43YS1Q7J0
 GA4_API_SECRET=vVRFTRQ0RkmZhriLnhhbWQ
 
-# Google Cloud Storage (2TB!)
-GOOGLE_CLOUD_PROJECT_ID=meauxbility-production
+# Google Cloud Storage (2TB!) - Get from: https://console.cloud.google.com/
+GOOGLE_PROJECT_NAME=Meauxbility-Core
+GOOGLE_PROJECT_ID=gen-lang-client-0938727621
+GOOGLE_PROJECT_NUMBER=254316571351
+GOOGLE_REGION=us-central1
 GOOGLE_CLOUD_STORAGE_BUCKET=meauxbility-assets
-GOOGLE_CLOUD_REGION=us-west1
-GOOGLE_CLOUD_SERVICE_ACCOUNT=meauxbility-service@meauxbility-production.iam.gserviceaccount.com
+GOOGLE_CLOUD_SERVICE_ACCOUNT=meauxbility-service@gen-lang-client-0938727621.iam.gserviceaccount.com
 GOOGLE_CLOUD_CREDENTIALS_PATH=/path/to/service-account.json
 
 # =============================================================================
