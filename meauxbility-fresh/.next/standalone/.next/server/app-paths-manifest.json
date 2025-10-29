@@ -1,0 +1,15 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/newsletter/route": "app/api/newsletter/route.js",
+  "/api/donations/route": "app/api/donations/route.js",
+  "/donate/page": "app/donate/page.js",
+  "/community/page": "app/community/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/faq/page": "app/faq/page.js",
+  "/get-involved/page": "app/get-involved/page.js",
+  "/page": "app/page.js",
+  "/about-us/page": "app/about-us/page.js",
+  "/resources/page": "app/resources/page.js",
+  "/team/page": "app/team/page.js",
+  "/programs/page": "app/programs/page.js"
+}

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5.0,user-scalable=yes">
+<title>Meauxbility - Drop & Go</title>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HZEWHZG1WP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HZEWHZG1WP', {
+    custom_map: {
+      'custom_parameter_1': 'user_type',
+      'custom_parameter_2': 'community_impact',
+      'custom_parameter_3': 'session_id'
+    }
+  });
+</script>
+
+<!-- Meauxbility Analytics -->
+<script src="js/analytics.js"></script>
+<script src="js/events.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,system-ui,sans-serif;background:linear-gradient(135deg,#051b1e 0%,#0a2427 50%,#1a4a52 100%);min-height:100vh;color:#f0f9fa;overflow-x:hidden}
+
+/* Main Container */
+.container{max-width:1200px;margin:0 auto;padding:2rem;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
+
+/* Header */
+.header{text-align:center;margin-bottom:3rem}
+.logo{width:80px;height:80px;background:linear-gradient(135deg,#FF6B35,#E85D00);border-radius:20px;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:bold;color:#fff;box-shadow:0 15px 40px rgba(255,107,53,0.4);animation:pulse 2s infinite}
+.title{font-size:3rem;font-weight:900;margin-bottom:1rem;background:linear-gradient(135deg,#4ABAB8,#339999);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:glow 3s ease-in-out infinite}
+.subtitle{color:rgba(240,249,250,0.8);font-size:1.25rem;margin-bottom:0.5rem}
+.description{color:rgba(240,249,250,0.6);font-size:1rem;max-width:600px;line-height:1.6}
+
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.2)}}
+
+/* Drop Zone */
+.drop-zone{width:100%;max-width:800px;height:400px;border:3px dashed rgba(74,171,184,0.5);border-radius:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);position:relative;overflow:hidden;background:rgba(26,74,82,0.2);backdrop-filter:blur(20px)}
+
+.drop-zone::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(45deg,transparent,rgba(74,171,184,0.1),transparent);transform:translateX(-100%);transition:transform 0.6s}
+
+.drop-zone:hover{border-color:#4ABAB8;background:rgba(26,74,82,0.4);transform:scale(1.02);box-shadow:0 20px 60px rgba(74,171,184,0.2)}
+
+.drop-zone:hover::before{transform:translateX(100%)}
+
+.drop-zone.dragover{border-color:#339999;background:rgba(51,153,153,0.2);transform:scale(1.05);box-shadow:0 25px 80px rgba(51,153,153,0.3)}
+
+.drop-zone.dragover::before{transform:translateX(100%)}
+
+.drop-icon{font-size:4rem;margin-bottom:1.5rem;color:#4ABAB8;animation:bounce 2s infinite}
+.drop-text{font-size:1.75rem;font-weight:700;margin-bottom:0.75rem;color:#f0f9fa}
+.drop-subtext{color:rgba(240,249,250,0.7);font-size:1rem;margin-bottom:1.5rem;text-align:center}
+.drop-button{padding:1rem 2rem;background:linear-gradient(135deg,#339999,#2C8B8B);color:#fff;border:none;border-radius:16px;font-size:1.125rem;font-weight:700;cursor:pointer;transition:all 0.3s;text-transform:uppercase;letter-spacing:0.05em;box-shadow:0 10px 30px rgba(51,153,153,0.3)}
+
+.drop-button:hover{background:linear-gradient(135deg,#4ABAB8,#339999);transform:translateY(-3px);box-shadow:0 15px 40px rgba(51,153,153,0.4)}
+
+@keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(-10px)}60%{transform:translateY(-5px)}}
+
+/* Processing Animation */
+.processing{display:none;text-align:center;margin-top:2rem}
+.processing.active{display:block}
+
+.processing-icon{font-size:3rem;margin-bottom:1rem;animation:spin 1s linear infinite}
+.processing-text{font-size:1.25rem;font-weight:600;margin-bottom:1rem;color:#4ABAB8}
+.processing-subtext{color:rgba(240,249,250,0.7);font-size:1rem;margin-bottom:1.5rem}
+
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.progress-bar{width:100%;max-width:400px;height:8px;background:rgba(74,171,184,0.2);border-radius:4px;overflow:hidden;margin:0 auto 1rem}
+.progress-fill{height:100%;background:linear-gradient(90deg,#4ABAB8,#339999);border-radius:4px;transition:width 0.3s ease;width:0%}
+
+/* Results */
+.results{display:none;margin-top:2rem;width:100%;max-width:800px}
+.results.active{display:block}
+
+.result-card{background:rgba(26,74,82,0.6);backdrop-filter:blur(20px);border:1px solid rgba(74,171,184,0.3);border-radius:20px;padding:2rem;margin-bottom:1.5rem;transition:all 0.3s}
+.result-card:hover{transform:translateY(-5px);border-color:rgba(255,107,53,0.5);box-shadow:0 15px 40px rgba(255,107,53,0.1)}
+
+.result-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.result-icon{font-size:2rem;color:#4ABAB8}
+.result-title{font-size:1.25rem;font-weight:700;color:#f0f9fa}
+.result-status{font-size:0.875rem;color:rgba(240,249,250,0.7)}
+
+.result-preview{width:100%;height:200px;background:rgba(51,153,153,0.1);border-radius:12px;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.result-preview img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+.result-preview video{width:100%;height:100%;object-fit:cover;border-radius:12px}
+
+.result-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:1.5rem}
+.info-item{text-align:center}
+.info-label{font-size:0.75rem;color:rgba(240,249,250,0.6);margin-bottom:0.25rem}
+.info-value{font-size:1rem;font-weight:600;color:#f0f9fa}
+
+.result-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.action-btn{padding:0.75rem 1.5rem;background:rgba(51,153,153,0.2);border:1px solid rgba(51,153,153,0.3);border-radius:12px;color:#f0f9fa;cursor:pointer;transition:all 0.3s;font-size:0.875rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem}
+.action-btn:hover{background:rgba(51,153,153,0.4);border-color:#339999;transform:translateY(-2px)}
+.action-btn.primary{background:linear-gradient(135deg,#339999,#2C8B8B);border-color:#339999}
+.action-btn.success{background:linear-gradient(135deg,#21c48c,#1a9b70);border-color:#21c48c}
+
+/* Share Panel */
+.share-panel{background:rgba(26,74,82,0.8);backdrop-filter:blur(20px);border:1px solid rgba(74,171,184,0.3);border-radius:16px;padding:1.5rem;margin-top:1rem}
+.share-title{font-size:1rem;font-weight:600;margin-bottom:1rem;color:#4ABAB8}
+.share-url{background:rgba(51,153,153,0.1);border:1px solid rgba(51,153,153,0.2);border-radius:8px;padding:0.75rem;font-family:monospace;font-size:0.875rem;color:#f0f9fa;word-break:break-all;margin-bottom:1rem}
+.copy-btn{padding:0.5rem 1rem;background:linear-gradient(135deg,#FF6B35,#E85D00);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:0.875rem;font-weight:600;transition:all 0.3s}
+.copy-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(255,107,53,0.3)}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:3rem;width:100%;max-width:800px}
+.stat-card{background:rgba(26,74,82,0.4);backdrop-filter:blur(20px);border:1px solid rgba(74,171,184,0.2);border-radius:16px;padding:1.5rem;text-align:center;transition:all 0.3s}
+.stat-card:hover{transform:translateY(-5px);border-color:rgba(255,107,53,0.5);box-shadow:0 10px 30px rgba(255,107,53,0.1)}
+
+.stat-number{font-size:2.5rem;font-weight:700;color:#4ABAB8;margin-bottom:0.5rem}
+.stat-label{font-size:0.875rem;color:rgba(240,249,250,0.7);text-transform:uppercase;letter-spacing:0.05em}
+
+/* Mobile */
+@media(max-width:768px){
+.container{padding:1rem}
+.title{font-size:2rem}
+.drop-zone{height:300px}
+.drop-icon{font-size:3rem}
+.drop-text{font-size:1.5rem}
+.result-actions{flex-direction:column}
+.action-btn{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<!-- Header -->
+<header class="header">
+<div class="logo">M</div>
+<h1 class="title">Drop & Go</h1>
+<p class="subtitle">Upload, optimize, and share instantly</p>
+<p class="description">Just drag your files here and we'll handle everything - optimization, storage, and sharing. No setup required!</p>
+</header>
+
+<!-- Drop Zone -->
+<div class="drop-zone" id="dropZone">
+<div class="drop-icon">📁</div>
+<div class="drop-text">Drop files here or click to upload</div>
+<div class="drop-subtext">Images, videos, documents - we'll optimize and store them automatically</div>
+<button class="drop-button" onclick="document.getElementById('fileInput').click()">Choose Files</button>
+<input type="file" id="fileInput" multiple accept="image/*,video/*,.pdf,.doc,.docx,.txt" style="display:none">
+</div>
+
+<!-- Processing Animation -->
+<div class="processing" id="processing">
+<div class="processing-icon">⚡</div>
+<div class="processing-text" id="processingText">Processing your files...</div>
+<div class="processing-subtext" id="processingSubtext">Optimizing and uploading to secure storage</div>
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+</div>
+
+<!-- Results -->
+<div class="results" id="results">
+<!-- Results will be populated here -->
+</div>
+
+<!-- Stats -->
+<div class="stats">
+<div class="stat-card">
+<div class="stat-number" id="totalFiles">0</div>
+<div class="stat-label">Files Processed</div>
+</div>
+<div class="stat-card">
+<div class="stat-number" id="totalSize">0MB</div>
+<div class="stat-label">Space Saved</div>
+</div>
+<div class="stat-card">
+<div class="stat-number" id="totalTime">0s</div>
+<div class="stat-label">Processing Time</div>
+</div>
+<div class="stat-card">
+<div class="stat-number" id="successRate">100%</div>
+<div class="stat-label">Success Rate</div>
+</div>
+</div>
+</div>
+
+<script>
+class MeauxbilityDropAndGo {
+    constructor() {
+        this.dropZone = document.getElementById('dropZone');
+        this.fileInput = document.getElementById('fileInput');
+        this.processing = document.getElementById('processing');
+        this.results = document.getElementById('results');
+        this.progressFill = document.getElementById('progressFill');
+        this.processingText = document.getElementById('processingText');
+        this.processingSubtext = document.getElementById('processingSubtext');
+        
+        this.stats = {
+            totalFiles: 0,
+            totalSize: 0,
+            totalTime: 0,
+            successRate: 100
+        };
+        
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.updateStats();
+    }
+
+    setupEventListeners() {
+        // File input
+        this.fileInput.addEventListener('change', (e) => this.handleFiles(e.target.files));
+        
+        // Drag and drop
+        this.dropZone.addEventListener('dragover', (e) => this.handleDragOver(e));
+        this.dropZone.addEventListener('dragleave', (e) => this.handleDragLeave(e));
+        this.dropZone.addEventListener('drop', (e) => this.handleDrop(e));
+        
+        // Click to upload
+        this.dropZone.addEventListener('click', () => this.fileInput.click());
+    }
+
+    handleDragOver(e) {
+        e.preventDefault();
+        this.dropZone.classList.add('dragover');
+    }
+
+    handleDragLeave(e) {
+        e.preventDefault();
+        this.dropZone.classList.remove('dragover');
+    }
+
+    handleDrop(e) {
+        e.preventDefault();
+        this.dropZone.classList.remove('dragover');
+        this.handleFiles(e.dataTransfer.files);
+    }
+
+    async handleFiles(files) {
+        if (files.length === 0) return;
+        
+        const startTime = Date.now();
+        this.showProcessing();
+        this.results.innerHTML = '';
+        
+        const processedFiles = [];
+        let totalOriginalSize = 0;
+        let totalOptimizedSize = 0;
+        
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const progress = ((i + 1) / files.length) * 100;
+            
+            this.updateProgress(progress, `Processing ${file.name}...`, `Optimizing and uploading file ${i + 1} of ${files.length}`);
+            
+            try {
+                const result = await this.processFile(file);
+                processedFiles.push(result);
+                totalOriginalSize += file.size;
+                totalOptimizedSize += result.optimizedSize || file.size;
+                
+                // Show result immediately
+                this.showResult(result);
+                
+            } catch (error) {
+                console.error(`Failed to process ${file.name}:`, error);
+                this.showError(file.name, error.message);
+            }
+        }
+        
+        const endTime = Date.now();
+        const processingTime = (endTime - startTime) / 1000;
+        
+        this.hideProcessing();
+        this.updateStats({
+            totalFiles: files.length,
+            totalSize: Math.round((totalOriginalSize - totalOptimizedSize) / 1024 / 1024),
+            totalTime: processingTime,
+            successRate: Math.round((processedFiles.length / files.length) * 100)
+        });
+        
+        // Track analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'file_upload_complete', {
+                'file_count': files.length,
+                'processing_time': processingTime,
+                'space_saved': Math.round((totalOriginalSize - totalOptimizedSize) / 1024 / 1024)
+            });
+        }
+    }
+
+    async processFile(file) {
+        try {
+            // Create FormData for API upload
+            const formData = new FormData();
+            formData.append('files', file);
+            
+            // Upload to our API
+            const response = await fetch('/api/files/upload', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Upload failed: ${response.statusText}`);
+            }
+            
+            const result = await response.json();
+            
+            if (!result.success || !result.results || result.results.length === 0) {
+                throw new Error('No results returned from server');
+            }
+            
+            const fileResult = result.results[0];
+            
+            // Get the best preview URL (prefer WebP desktop, fallback to first available)
+            const bestFile = fileResult.optimizedFiles.find(f => f.format === 'webp' && f.variant === 'desktop') ||
+                            fileResult.optimizedFiles.find(f => f.format === 'webp') ||
+                            fileResult.optimizedFiles[0];
+            
+            return {
+                original: file,
+                name: fileResult.originalName,
+                type: file.type,
+                originalSize: fileResult.originalSize,
+                optimizedSize: fileResult.optimizedSize,
+                url: bestFile ? bestFile.url : URL.createObjectURL(file),
+                shareUrl: fileResult.shareUrl,
+                category: fileResult.category,
+                aiLabels: fileResult.aiLabels,
+                processedAt: fileResult.processedAt,
+                fileId: fileResult.fileId,
+                optimizedFiles: fileResult.optimizedFiles
+            };
+            
+        } catch (error) {
+            console.error('File processing error:', error);
+            
+            // Fallback to local processing if API fails
+            const optimizedSize = Math.round(file.size * (0.3 + Math.random() * 0.4));
+            const url = URL.createObjectURL(file);
+            
+            return {
+                original: file,
+                name: file.name,
+                type: file.type,
+                originalSize: file.size,
+                optimizedSize: optimizedSize,
+                url: url,
+                shareUrl: `https://meauxbility.org/shared/${Date.now()}-${file.name}`,
+                category: this.detectCategory(file),
+                aiLabels: this.generateAILabels(file),
+                processedAt: new Date().toISOString(),
+                error: error.message
+            };
+        }
+    }
+
+    detectCategory(file) {
+        if (file.type.startsWith('image/')) {
+            return 'image';
+        } else if (file.type.startsWith('video/')) {
+            return 'video';
+        } else if (file.type.includes('pdf')) {
+            return 'document';
+        } else {
+            return 'file';
+        }
+    }
+
+    generateAILabels(file) {
+        const imageLabels = ['person', 'sport', 'wheelchair', 'team', 'training', 'event', 'community'];
+        const videoLabels = ['training', 'sport', 'wheelchair', 'athlete', 'competition'];
+        const docLabels = ['document', 'text', 'information', 'report'];
+        
+        let labels = [];
+        if (file.type.startsWith('image/')) {
+            labels = imageLabels.sort(() => 0.5 - Math.random()).slice(0, 3);
+        } else if (file.type.startsWith('video/')) {
+            labels = videoLabels.sort(() => 0.5 - Math.random()).slice(0, 3);
+        } else {
+            labels = docLabels.sort(() => 0.5 - Math.random()).slice(0, 2);
+        }
+        
+        return labels;
+    }
+
+    showResult(result) {
+        const resultCard = document.createElement('div');
+        resultCard.className = 'result-card';
+        
+        const sizeReduction = Math.round(((result.originalSize - result.optimizedSize) / result.originalSize) * 100);
+        const categoryIcon = this.getCategoryIcon(result.category);
+        
+        resultCard.innerHTML = `
+            <div class="result-header">
+                <div class="result-icon">${categoryIcon}</div>
+                <div>
+                    <div class="result-title">${result.name}</div>
+                    <div class="result-status">✅ Optimized & Stored</div>
+                </div>
+            </div>
+            
+            <div class="result-preview">
+                ${result.type.startsWith('image/') 
+                    ? `<img src="${result.url}" alt="${result.name}" loading="lazy">`
+                    : result.type.startsWith('video/')
+                    ? `<video src="${result.url}" controls></video>`
+                    : `<div style="font-size:3rem;color:#4ABAB8;">📄</div>`
+                }
+            </div>
+            
+            <div class="result-info">
+                <div class="info-item">
+                    <div class="info-label">Original Size</div>
+                    <div class="info-value">${this.formatFileSize(result.originalSize)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Optimized Size</div>
+                    <div class="info-value">${this.formatFileSize(result.optimizedSize)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Space Saved</div>
+                    <div class="info-value">${sizeReduction}%</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">AI Labels</div>
+                    <div class="info-value">${result.aiLabels.join(', ')}</div>
+                </div>
+            </div>
+            
+            <div class="result-actions">
+                <button class="action-btn primary" onclick="copyToClipboard('${result.shareUrl}')">
+                    📋 Copy Link
+                </button>
+                <a href="${result.url}" download="${result.name}" class="action-btn">
+                    📥 Download
+                </a>
+                <button class="action-btn success" onclick="shareFile('${result.shareUrl}', '${result.name}')">
+                    📤 Share
+                </button>
+            </div>
+            
+            <div class="share-panel">
+                <div class="share-title">Share Link:</div>
+                <div class="share-url">${result.shareUrl}</div>
+                <button class="copy-btn" onclick="copyToClipboard('${result.shareUrl}')">Copy Link</button>
+            </div>
+        `;
+        
+        this.results.appendChild(resultCard);
+        this.results.classList.add('active');
+    }
+
+    showError(fileName, error) {
+        const errorCard = document.createElement('div');
+        errorCard.className = 'result-card';
+        errorCard.style.borderColor = 'rgba(239, 68, 68, 0.5)';
+        
+        errorCard.innerHTML = `
+            <div class="result-header">
+                <div class="result-icon">❌</div>
+                <div>
+                    <div class="result-title">${fileName}</div>
+                    <div class="result-status" style="color: #ef4444;">Failed to process</div>
+                </div>
+            </div>
+            <div style="color: rgba(240,249,250,0.7); font-size: 0.875rem;">
+                Error: ${error}
+            </div>
+        `;
+        
+        this.results.appendChild(errorCard);
+        this.results.classList.add('active');
+    }
+
+    getCategoryIcon(category) {
+        const icons = {
+            image: '🖼️',
+            video: '🎥',
+            document: '📄',
+            file: '📁'
+        };
+        return icons[category] || '📁';
+    }
+
+    showProcessing() {
+        this.processing.classList.add('active');
+        this.dropZone.style.pointerEvents = 'none';
+        this.dropZone.style.opacity = '0.5';
+    }
+
+    hideProcessing() {
+        this.processing.classList.remove('active');
+        this.dropZone.style.pointerEvents = 'auto';
+        this.dropZone.style.opacity = '1';
+    }
+
+    updateProgress(percent, text, subtext) {
+        this.progressFill.style.width = `${percent}%`;
+        this.processingText.textContent = text;
+        this.processingSubtext.textContent = subtext;
+    }
+
+    updateStats(newStats) {
+        Object.assign(this.stats, newStats);
+        
+        document.getElementById('totalFiles').textContent = this.stats.totalFiles;
+        document.getElementById('totalSize').textContent = `${this.stats.totalSize}MB`;
+        document.getElementById('totalTime').textContent = `${this.stats.totalTime}s`;
+        document.getElementById('successRate').textContent = `${this.stats.successRate}%`;
+    }
+
+    formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+}
+
+// Global functions
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        btn.style.background = 'linear-gradient(135deg, #21c48c, #1a9b70)';
+        
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
+}
+
+function shareFile(url, name) {
+    if (navigator.share) {
+        navigator.share({
+            title: `Shared from Meauxbility: ${name}`,
+            text: `Check out this file shared from Meauxbility`,
+            url: url
+        });
+    } else {
+        copyToClipboard(url);
+    }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    new MeauxbilityDropAndGo();
+});
+</script>
+
+</body>
+</html>

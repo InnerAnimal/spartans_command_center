@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Impact - Meauxbility</title>
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZEWHZG1WP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HZEWHZG1WP', {
+      custom_map: {
+        'custom_parameter_1': 'user_type',
+        'custom_parameter_2': 'community_impact',
+        'custom_parameter_3': 'session_id'
+      }
+    });
+  </script>
+
+  <!-- Meauxbility Analytics -->
+  <script src="js/analytics.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/analytics-dashboard.js"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stripe Payment Integration -->
+  <script src="https://js.stripe.com/v3/"></script>
+  
+  <!-- Google Model Viewer for GLB -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  
+  <!-- Preload Logo -->
+  <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+
+  <style>
+    /* =============== RESET & BASE =============== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* =============== BRAND COLORS =============== */
+    :root {
+      /* Teal Steel System */
+      --meaux-orange: #FF7619;
+      --meaux-teal: #1F97A9;
+      --meaux-deep: #051b1e;
+      --meaux-dark: #0a2427;
+      --meaux-blue: #0f2f33;
+      --meaux-teal-steel: #1a4a52;
+      --meaux-metallic: #2a6b75;
+      --meaux-shine: #3a8b98;
+      --meaux-light-teal: #4aabb8;
+      --meaux-text: #f0f9fa;
+      --meaux-sub-text: #c8e1e6;
+      --meaux-green: #21c48c;
+      
+      /* Layout Variables */
+      --mbx-max: 1400px;
+      --mbx-radius: 20px;
+      --mbx-px: clamp(20px, 4vw, 48px);
+      --mbx-section-padding: clamp(80px, 10vw, 120px);
+      --mbx-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --mbx-shadow-sm: 0 4px 12px rgba(0,0,0,0.06);
+      --mbx-shadow-md: 0 12px 32px rgba(0,0,0,0.10);
+      --mbx-shadow-lg: 0 24px 48px rgba(0,0,0,0.14);
+    }
+
+    /* Light Mode Variables */
+    [data-theme="light"] {
+      --page-background: #FFFFFF;
+      --card-background: rgba(248, 250, 251, 0.9);
+      --text-primary: #0C2D31;
+      --text-secondary: #173E45;
+      --border-color: rgba(12, 45, 49, 0.2);
+      --hover-overlay: rgba(12, 45, 49, 0.08);
+    }
+
+    /* Dark Mode Variables */
+    [data-theme="dark"] {
+      --page-background: #051b1e;
+      --card-background: rgba(26, 74, 82, 0.1);
+      --text-primary: #f0f9fa;
+      --text-secondary: #c8e1e6;
+      --border-color: rgba(74, 171, 184, 0.2);
+      --hover-overlay: rgba(74, 171, 184, 0.08);
+    }
+
+    /* =============== BODY & LAYOUT =============== */
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--page-background);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: all 0.3s var(--mbx-ease);
+      padding-top: 80px; /* Account for fixed header */
+    }
+
+    /* =============== NAVIGATION =============== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 9999;
+      transition: all 0.3s var(--mbx-ease);
+    }
+
+    [data-theme="dark"] .nav {
+      background: rgba(5, 27, 30, 0.95);
+    }
+
+    .nav.scrolled {
+      height: 70px;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+    }
+
+    [data-theme="dark"] .nav.scrolled {
+      background: rgba(5, 27, 30, 0.98);
+    }
+
+    .nav-container {
+      max-width: var(--mbx-max);
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 var(--mbx-px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: var(--mbx-ease);
+    }
+
+    .nav-logo:hover {
+      transform: scale(0.98);
+    }
+
+    .nav-logo picture {
+      display: block;
+      width: 180px;
+      height: auto;
+      transition: var(--mbx-ease);
+    }
+
+    .nav-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .nav.scrolled .nav-logo picture {
+      width: 160px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      height: 100%;
+    }
+
+    .nav-item {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 10px 18px;
+      color: var(--meaux-teal);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: var(--mbx-ease);
+      white-space: nowrap;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.2px;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 18px;
+      right: 18px;
+      height: 0;
+      background: var(--meaux-orange);
+      border-radius: 2px;
+      transition: height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-link:hover {
+      color: var(--meaux-orange);
+      background: var(--hover-overlay);
+    }
+
+    .nav-link.active,
+    .nav-link[aria-current="page"] {
+      color: var(--meaux-orange);
+      font-weight: 700;
+    }
+
+    .nav-link.active::after,
+    .nav-link[aria-current="page"]::after {
+      height: 3px;
+    }
+
+    .nav-donate {
+      margin-left: 12px;
+      padding: 11px 26px;
+      background: var(--meaux-orange);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--mbx-ease);
+      min-height: 44px;
+      letter-spacing: 0.4px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-donate:hover {
+      background: #E85D00;
+      transform: translateY(-1px);
+    }
+
+    /* =============== HERO SECTION =============== */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: linear-gradient(180deg, 
+        var(--meaux-deep) 0%,
+        var(--meaux-dark) 25%,
+        var(--meaux-blue) 50%,
+        var(--meaux-teal-steel) 75%,
+        var(--meaux-metallic) 100%
+      );
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* Particle System */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--meaux-orange);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 1;
+      }
+    }
+
+    /* 3D Model Container - Enhanced */
+    .model-container {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 600px;
+      height: 600px;
+      z-index: 3;
+      opacity: 0.8;
+      pointer-events: none;
+      transition: all 0.6s var(--mbx-ease);
+      filter: drop-shadow(0 0 40px rgba(255, 118, 25, 0.3));
+    }
+
+    .model-container model-viewer {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      --poster-color: transparent;
+    }
+
+    /* Scroll-driven 3D effects */
+    .model-container.scroll-enhanced {
+      transform: translateY(-50%) rotateY(15deg) rotateX(5deg);
+      filter: drop-shadow(0 0 60px rgba(255, 118, 25, 0.5));
+    }
+
+    .model-container.scroll-enhanced model-viewer {
+      animation: modelPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes modelPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    /* Hero Content */
+    .hero-content {
+      max-width: var(--mbx-max);
+      margin: 0 auto;
+      padding: 0 var(--mbx-px);
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-text {
+      text-align: left;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 3rem;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 5;
+    }
+
+    .hero-eyebrow {
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--meaux-light-teal);
+      font-size: 12px;
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 900;
+      color: var(--meaux-text);
+      margin-bottom: 1rem;
+      line-height: 1.1;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.2s;
+    }
+
+    .hero-title .accent {
+      background: linear-gradient(135deg, var(--meaux-orange), var(--meaux-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+      color: var(--meaux-sub-text);
+      margin-bottom: 2rem;
+      font-weight: 500;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.4s;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.6s;
+    }
+
+    .cta-primary {
+      padding: 1.25rem 3rem;
+      background: var(--meaux-orange);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 12px 32px rgba(255, 118, 25, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-primary::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .cta-primary:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .cta-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(255, 118, 25, 0.4);
+    }
+
+    .cta-secondary {
+      padding: 1.25rem 3rem;
+      background: transparent;
+      color: var(--meaux-text);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .cta-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--meaux-light-teal);
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(74, 171, 184, 0.3);
+    }
+
+    /* =============== BRAND COLORS SECTION =============== */
+    .colors-section {
+      background: var(--page-background);
+      color: var(--text-primary);
+      padding: var(--mbx-section-padding) 0;
+      transition: all 0.3s var(--mbx-ease);
+    }
+
+    .colors-container {
+      max-width: var(--mbx-max);
+      margin: 0 auto;
+      padding: 0 var(--mbx-px);
+    }
+
+    .colors-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .colors-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin: 0 auto 1rem;
+      color: var(--text-primary);
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      transition: color 0.4s ease;
+      text-shadow: 0 4px 15px rgba(31, 151, 169, 0.3);
+      letter-spacing: -0.02em;
+    }
+
+    .colors-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 4px;
+      background: var(--meaux-orange);
+      transition: width 0.6s ease;
+      border-radius: 2px;
+    }
+
+    .colors-title:hover {
+      color: var(--meaux-light-teal);
+      transform: scale(1.02);
+    }
+
+    .colors-title:hover::after {
+      width: 100%;
+    }
+
+    .colors-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text-secondary);
+      font-weight: 400;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+      transition: var(--mbx-ease);
+    }
+
+    .colors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .color-card {
+      background: var(--card-background);
+      border: 1px solid var(--border-color);
+      border-radius: var(--mbx-radius);
+      padding: 24px;
+      text-align: center;
+      box-shadow: var(--mbx-shadow-sm);
+      backdrop-filter: blur(25px);
+      transition: all 0.3s var(--mbx-ease);
+      cursor: pointer;
+    }
+
+    .color-card:hover {
+      background: var(--hover-overlay);
+      border-color: var(--meaux-orange);
+      transform: translateY(-4px);
+      box-shadow: var(--mbx-shadow-md);
+    }
+
+    .color-swatch {
+      width: 100%;
+      height: 120px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.3s var(--mbx-ease);
+    }
+
+    .color-card:hover .color-swatch {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .color-name {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .color-hex {
+      font-family: monospace;
+      color: var(--text-secondary);
+      font-size: 14px;
+      background: var(--hover-overlay);
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    /* =============== COMPONENTS SECTION =============== */
+    .components-section {
+      background: var(--page-background);
+      color: var(--text-primary);
+      padding: var(--mbx-section-padding) 0;
+      transition: all 0.3s var(--mbx-ease);
+    }
+
+    .components-container {
+      max-width: var(--mbx-max);
+      margin: 0 auto;
+      padding: 0 var(--mbx-px);
+    }
+
+    .components-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .components-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin: 0 auto 1rem;
+      color: var(--text-primary);
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      transition: color 0.4s ease;
+      text-shadow: 0 4px 15px rgba(31, 151, 169, 0.3);
+      letter-spacing: -0.02em;
+    }
+
+    .components-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 4px;
+      background: var(--meaux-orange);
+      transition: width 0.6s ease;
+      border-radius: 2px;
+    }
+
+    .components-title:hover {
+      color: var(--meaux-light-teal);
+      transform: scale(1.02);
+    }
+
+    .components-title:hover::after {
+      width: 100%;
+    }
+
+    .components-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text-secondary);
+      font-weight: 400;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+      transition: var(--mbx-ease);
+    }
+
+    .components-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+
+    .component-card {
+      background: var(--card-background);
+      border: 1px solid var(--border-color);
+      border-radius: var(--mbx-radius);
+      padding: 32px;
+      box-shadow: var(--mbx-shadow-sm);
+      backdrop-filter: blur(25px);
+      transition: all 0.3s var(--mbx-ease);
+    }
+
+    .component-card:hover {
+      background: var(--hover-overlay);
+      border-color: var(--meaux-orange);
+      transform: translateY(-4px);
+      box-shadow: var(--mbx-shadow-md);
+    }
+
+    .component-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .component-demo {
+      margin-bottom: 20px;
+      padding: 20px;
+      background: var(--hover-overlay);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* "Meaux Glow" Button Styles */
+    .mbx-btn {
+      border: none;
+      padding: clamp(14px, 2.5vw, 18px) clamp(24px, 4.5vw, 34px);
+      border-radius: 14px;
+      font-weight: 900;
+      font-size: clamp(15px, 1.8vw, 18px);
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px;
+      min-height: 44px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    }
+
+    .mbx-btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, rgba(255, 118, 25, 0.24), rgba(255, 179, 128, 0.20));
+      border: 1.5px solid rgba(255, 118, 25, 0.52);
+      box-shadow: 0 12px 34px rgba(255, 118, 25, 0.32), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .mbx-btn-primary:hover,
+    .mbx-btn-primary:focus-visible {
+      transform: translateY(2px);
+      background: linear-gradient(135deg, rgba(255, 118, 25, 0.30), rgba(255, 179, 128, 0.24));
+      border-color: var(--meaux-orange);
+      box-shadow: 0 16px 44px rgba(255, 118, 25, 0.38);
+      outline: 3px solid var(--meaux-teal);
+      outline-offset: 2px;
+    }
+
+    .mbx-btn-secondary {
+      color: #fff;
+      background: linear-gradient(135deg, rgba(31, 151, 169, 0.24), rgba(15, 122, 138, 0.20));
+      border: 1.5px solid rgba(31, 151, 169, 0.52);
+      box-shadow: 0 12px 34px rgba(31, 151, 169, 0.32), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .mbx-btn-secondary:hover,
+    .mbx-btn-secondary:focus-visible {
+      transform: translateY(2px);
+      background: linear-gradient(135deg, rgba(31, 151, 169, 0.30), rgba(15, 122, 138, 0.24));
+      border-color: var(--meaux-teal);
+      box-shadow: 0 16px 44px rgba(31, 151, 169, 0.38);
+      outline: 3px solid var(--meaux-orange);
+      outline-offset: 2px;
+    }
+
+    /* =============== PAYMENT SYSTEM =============== */
+    .payment-section {
+      background: linear-gradient(135deg, var(--meaux-deep) 0%, var(--meaux-dark) 100%);
+      color: var(--meaux-text);
+      padding: var(--mbx-section-padding) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .payment-container {
+      max-width: var(--mbx-max);
+      margin: 0 auto;
+      padding: 0 var(--mbx-px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .payment-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .payment-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin: 0 auto 1rem;
+      color: var(--meaux-text);
+      position: relative;
+      display: inline-block;
+    }
+
+    .payment-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--meaux-sub-text);
+      font-weight: 400;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .payment-demo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    }
+
+    .payment-trigger {
+      background: linear-gradient(135deg, var(--meaux-orange), #FF8A33);
+      color: white;
+      border: none;
+      padding: 20px 40px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+    }
+
+    .payment-trigger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(255, 107, 0, 0.4);
+    }
+
+    /* =============== FOOTER =============== */
+    .footer {
+      background: linear-gradient(180deg, var(--meaux-teal) 0%, var(--meaux-teal-steel) 50%, var(--meaux-metallic) 100%);
+      color: var(--meaux-text);
+      padding: 64px 0 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-container {
+      max-width: var(--mbx-max);
+      margin: 0 auto;
+      padding: 0 var(--mbx-px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand {
+      grid-column: 1;
+    }
+
+    .footer-logo {
+      display: inline-block;
+      margin-bottom: 12px;
+      transition: var(--mbx-ease);
+      text-decoration: none;
+    }
+
+    .footer-logo picture {
+      display: block;
+    }
+
+    .footer-logo img {
+      width: 220px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.3));
+      transition: var(--mbx-ease);
+    }
+
+    .footer-logo:hover img {
+      transform: translateY(-4px) scale(1.03);
+      filter: drop-shadow(0 8px 24px var(--meaux-orange));
+    }
+
+    .footer-brand p {
+      font-size: clamp(16px, 2vw, 18px);
+      line-height: 1.7;
+      color: var(--meaux-sub-text);
+      max-width: 480px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .footer-column h4 {
+      color: var(--meaux-text);
+      font-size: clamp(16px, 2vw, 19px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: var(--meaux-sub-text);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--mbx-ease);
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 2px;
+      background: var(--meaux-orange);
+      transition: width 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--meaux-orange);
+      transform: translateX(4px);
+    }
+
+    .footer-links a:hover::after {
+      width: 100%;
+    }
+
+    .footer-bottom {
+      padding-top: 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-copyright {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--meaux-sub-text);
+    }
+
+    /* =============== ANIMATIONS =============== */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =============== RESPONSIVE DESIGN =============== */
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .model-container {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: 400px;
+        height: 400px;
+        margin: 2rem auto;
+        opacity: 0.6;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 0 20px;
+      }
+      
+      .nav-menu {
+        display: none;
+      }
+      
+      .colors-grid,
+      .components-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      
+      .footer-brand {
+        grid-column: 1;
+      }
+      
+      .model-container {
+        width: 300px;
+        height: 300px;
+        opacity: 0.4;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-container {
+        padding: 0 16px;
+      }
+      
+      .nav-logo picture {
+        width: 150px;
+      }
+      
+      .nav.scrolled .nav-logo picture {
+        width: 135px;
+      }
+      
+      .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      .cta-primary,
+      .cta-secondary {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    /* =============== ACCESSIBILITY =============== */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      
+      .model-container model-viewer {
+        animation: none;
+      }
+    }
+
+    *:focus-visible {
+      outline: 2px solid var(--meaux-orange);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <!-- Navigation -->
+  <header class="nav" id="nav" role="banner">
+    <div class="nav-container">
+      <a href="/" class="nav-logo" aria-label="Meauxbility Home">
+        <picture>
+          <source srcset="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+          <img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.png?v=1760648662" alt="Meauxbility" width="180" height="180" loading="eager" fetchpriority="high">
+        </picture>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="nav-menu">
+          <li><a class="nav-link" href="/">Home</a></li>
+          <li><a class="nav-link" href="/pages/about-us">About</a></li>
+          <li><a class="nav-link" href="/pages/mobility-grants-programs">Programs</a></li>
+          <li><a class="nav-link" href="/pages/community">Community</a></li>
+          <li><a class="nav-link" href="/pages/resources">Resources</a></li>
+          <li><a class="nav-link" href="/pages/get-involved">Connect</a></li>
+          <li><a class="nav-link active" href="/pages/impact" aria-current="page">Impact</a></li>
+        </ul>
+      </nav>
+      <a class="nav-donate" href="/pages/donate">Donate</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero Section with Enhanced 3D Model -->
+    <section class="hero-section" data-mission-element="hero_section">
+      <!-- Particle System -->
+      <div class="particles" id="particles"></div>
+      
+      <!-- Enhanced 3D Model -->
+      <div class="model-container" id="modelContainer">
+        <model-viewer
+          src="https://cdn.shopify.com/3d/models/ba3d2c5ba2a0e1d1/Rocket_Growth_Chart_0831082632_generate.glb"
+          alt="Growth rocket animation"
+          camera-orbit="0deg 90deg 8m"
+          field-of-view="30deg"
+          disable-zoom
+          disable-pan
+          disable-tap
+          interaction-prompt="none"
+          shadow-intensity="0"
+          exposure="1.2"
+          auto-rotate
+          rotation-per-second="18deg">
+        </model-viewer>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-eyebrow">501(c)(3) • MORE OPTIONS. MORE ACCESS. MORE LIFE.</div>
+          <h1 class="hero-title">
+            Epic <span class="accent">Impact</span>
+          </h1>
+          <p class="hero-subtitle">
+            Experience the power of transformation through our enhanced 3D visualization. Every donation creates ripples of change that extend far beyond what you can see.
+          </p>
+          <div class="hero-ctas">
+            <button class="cta-primary" onclick="openDonationModal()" data-mission-element="donate_cta">Donate Now</button>
+            <button class="cta-secondary" onclick="scrollToColors()">Explore Brand</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand Colors Section -->
+    <section class="colors-section" id="colorsSection">
+      <div class="colors-container">
+        <div class="colors-header">
+          <h2 class="colors-title">Teal Steel Color Palette</h2>
+          <p class="colors-subtitle">Complete color system with primary, secondary, and accent colors for consistent brand application across all materials.</p>
+        </div>
+
+        <div class="colors-grid">
+          <div class="color-card" onclick="copyColor('--meaux-orange', '#FF7619')">
+            <div class="color-swatch" style="background: var(--meaux-orange);"></div>
+            <div class="color-name">Meaux Orange</div>
+            <div class="color-hex">#FF7619</div>
+          </div>
+
+          <div class="color-card" onclick="copyColor('--meaux-teal', '#1F97A9')">
+            <div class="color-swatch" style="background: var(--meaux-teal);"></div>
+            <div class="color-name">Meaux Teal</div>
+            <div class="color-hex">#1F97A9</div>
+          </div>
+
+          <div class="color-card" onclick="copyColor('--meaux-deep', '#051b1e')">
+            <div class="color-swatch" style="background: var(--meaux-deep);"></div>
+            <div class="color-name">Meaux Deep</div>
+            <div class="color-hex">#051b1e</div>
+          </div>
+
+          <div class="color-card" onclick="copyColor('--meaux-teal-steel', '#1a4a52')">
+            <div class="color-swatch" style="background: var(--meaux-teal-steel);"></div>
+            <div class="color-name">Teal Steel</div>
+            <div class="color-hex">#1a4a52</div>
+          </div>
+
+          <div class="color-card" onclick="copyColor('--meaux-metallic', '#2a6b75')">
+            <div class="color-swatch" style="background: var(--meaux-metallic);"></div>
+            <div class="color-name">Metallic</div>
+            <div class="color-hex">#2a6b75</div>
+          </div>
+
+          <div class="color-card" onclick="copyColor('--meaux-light-teal', '#4aabb8')">
+            <div class="color-swatch" style="background: var(--meaux-light-teal);"></div>
+            <div class="color-name">Light Teal</div>
+            <div class="color-hex">#4aabb8</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components Section -->
+    <section class="components-section" id="componentsSection">
+      <div class="components-container">
+        <div class="components-header">
+          <h2 class="components-title">UI Components</h2>
+          <p class="components-subtitle">"Meaux Glow" button styles, cards, and modals with hover effects, proper contrast, and consistent sizing for all interactive elements.</p>
+        </div>
+
+        <div class="components-grid">
+          <!-- Buttons Component -->
+          <div class="component-card">
+            <h3 class="component-title">"Meaux Glow" Buttons</h3>
+            <div class="component-demo">
+              <button class="mbx-btn mbx-btn-primary">
+                <span>More Options. More Access. More Life.</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="width: 20px; height: 20px;">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="mbx-btn mbx-btn-secondary">
+                <span>Learn More</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="width: 20px; height: 20px;">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card Component -->
+          <div class="component-card">
+            <h3 class="component-title">Card Component</h3>
+            <div class="component-demo">
+              <div style="background: var(--card-background); border: 1px solid var(--border-color); border-radius: var(--mbx-radius); padding: 24px; box-shadow: var(--mbx-shadow-sm);">
+                <h4 style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">Mission Card</h4>
+                <p style="color: var(--text-secondary); margin-bottom: 16px;">Connecting SCI survivors to treatments, equipment, and community support.</p>
+                <button class="mbx-btn mbx-btn-primary">
+                  <span>Learn More</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="width: 20px; height: 20px;">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Payment System Section -->
+    <section class="payment-section" id="paymentSection">
+      <div class="payment-container">
+        <div class="payment-header">
+          <h2 class="payment-title">LGDNPAY System</h2>
+          <p class="payment-subtitle">Advanced payment processing with multiple options and secure transactions.</p>
+        </div>
+        <div class="payment-demo">
+          <button class="payment-trigger" onclick="openPaymentModal()">Test Payment System</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="/" class="footer-logo" aria-label="Meauxbility Home">
+            <picture>
+              <source srcset="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+              <img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.png?v=1760648662" alt="Meauxbility - Empowering mobility and independence" width="220" height="220" loading="lazy">
+            </picture>
+          </a>
+          <p>More Options. More Access. More Life. Join us as we transform obstacles into pathways for adaptive athletes and spinal cord injury survivors.</p>
+        </div>
+
+        <!-- Resources Column -->
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <ul class="footer-links" role="list">
+            <li><a href="https://meauxbility.org/pages/meauxbility-branding">Brand Guide</a></li>
+            <li><a href="https://meauxbility.org/pages/community">Community</a></li>
+            <li><a href="https://meauxbility.org/pages/news-media-features">Latest News</a></li>
+            <li><a href="https://meauxbility.org/pages/non-profit-information">501(c)(3) Info</a></li>
+          </ul>
+        </div>
+
+        <!-- Company Column -->
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul class="footer-links" role="list">
+            <li><a href="https://meauxbility.org/pages/sam-primeaux">About Sam</a></li>
+            <li><a href="https://meauxbility.org/pages/team-meauxbility">Our Team</a></li>
+            <li><a href="https://meauxbility.org/pages/about-us">Our Mission</a></li>
+            <li><a href="https://meauxbility.org/pages/accessibility-partners">Partners</a></li>
+            <li><a href="https://meauxbility.org/pages/contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Support Column -->
+        <div class="footer-column">
+          <h4>Support</h4>
+          <ul class="footer-links" role="list">
+            <li><a href="https://meauxbility.org/pages/faq">FAQ</a></li>
+            <li><a href="https://meauxbility.org/pages/donate">Ways to Give</a></li>
+            <li><a href="https://meauxbility.org/pages/get-involved">Get Involved</a></li>
+            <li><a href="https://meauxbility.org/pages/apply-for-funding">Apply for Grant</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-copyright">
+          © <span id="footer-year"></span> Meauxbility. 501(c)(3) EIN: 33-4214907. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Payment Modal (LGDNPAY System) -->
+  <div class="overlay" id="paymentOverlay">
+    <div class="modal">
+      <div class="header">
+        <h2 class="title">Support DonMichael's Journey</h2>
+        <p class="subtitle">Every dollar directly transforms lives</p>
+        <button class="close" onclick="closePaymentModal()">&times;</button>
+      </div>
+
+      <div class="body" id="paymentContent">
+        <div class="left">
+          <div>
+            <div class="section-title">Choose Amount</div>
+            <div class="amounts">
+              <button class="amount" onclick="selectAmount(25,this)">$25</button>
+              <button class="amount" onclick="selectAmount(50,this)">$50</button>
+              <button class="amount" onclick="selectAmount(100,this)">$100</button>
+              <button class="amount" onclick="selectAmount(250,this)">$250</button>
+              <button class="amount selected" onclick="selectAmount(500,this)">$500</button>
+              <button class="amount" onclick="selectAmount(1000,this)">$1K</button>
+            </div>
+          </div>
+
+          <div class="custom">
+            <input type="number" class="input" id="customAmount" placeholder="Custom amount" min="1">
+            <button class="amount" style="width:auto;padding:10px 16px" onclick="setCustomAmount()">Set</button>
+          </div>
+
+          <div>
+            <div class="section-title">Frequency</div>
+            <div class="freq">
+              <button class="freq-btn active" onclick="setFrequency('once',this)">One Time</button>
+              <button class="freq-btn" onclick="setFrequency('monthly',this)">Monthly</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-title">Designation</div>
+            <select class="select" id="designation">
+              <option>Where Most Needed</option>
+              <option>DonMichael's Campaign</option>
+              <option>Recovery Grant Program</option>
+              <option>Adaptive Athletes</option>
+              <option>Equipment Fund</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="right">
+          <div>
+            <div class="section-title">Your Information</div>
+            <div class="field-group">
+              <input type="text" class="input" id="firstName" placeholder="First Name" required>
+              <input type="text" class="input" id="lastName" placeholder="Last Name" required>
+            </div>
+            <div class="field-group field-single">
+              <input type="email" class="input" id="email" placeholder="Email Address" required>
+            </div>
+            <div class="field-group field-single">
+              <input type="tel" class="input" id="phone" placeholder="Phone (Optional)">
+            </div>
+          </div>
+
+          <div>
+            <div class="section-title">Payment Method</div>
+            <div class="payments">
+              <button class="payment selected" onclick="selectPayment('stripe',this)">
+                <div class="payment-icon">
+                  <svg viewBox="0 0 24 24"><path d="M13 11h7v2h-7zm0-4h7v2h-7zm0 8h7v2h-7zm-8-4h2v2H5zm0 4h2v2H5zm0-8h2v2H5z"/></svg>
+                </div>
+                <div>Card</div>
+              </button>
+              <button class="payment" onclick="selectPayment('paypal',this)">
+                <div class="payment-icon">
+                  <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z"/></svg>
+                </div>
+                <div>PayPal</div>
+              </button>
+              <button class="payment" onclick="selectPayment('apple',this)">
+                <div class="payment-icon">
+                  <svg viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09l-.05-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                </div>
+                <div>Apple</div>
+              </button>
+              <button class="payment" onclick="selectPayment('google',this)">
+                <div class="payment-icon">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <div>Google</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="submit-section">
+            <div class="summary">
+              <span class="summary-label">Total Amount:</span>
+              <span class="summary-value" id="totalAmount">$500</span>
+            </div>
+            <button class="submit" id="submitBtn" onclick="processPayment()">
+              <span id="submitText">Complete Donation</span>
+              <span class="loading" id="loading" style="display:none"></span>
+            </button>
+            <div class="secure">
+              <span>🔒</span>
+              <span>Secure & Tax-Deductible • EIN: 33-4214907</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success" id="success">
+        <div class="success-icon">✓</div>
+        <h2 class="success-title">Thank You!</h2>
+        <p class="success-msg">Your donation is making a real difference. You'll receive a receipt shortly.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =============== PAYMENT SYSTEM ===============
+    const PaymentSystem = {
+      state: {
+        amount: 500,
+        frequency: 'once',
+        paymentMethod: 'stripe',
+        processing: false
+      },
+
+      open() {
+        document.getElementById('paymentOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        this.updateTotal();
+      },
+
+      close() {
+        document.getElementById('paymentOverlay').classList.remove('active');
+        document.body.style.overflow = '';
+        this.reset();
+      },
+
+      selectAmount(amount, element) {
+        document.querySelectorAll('.amount').forEach(btn => btn.classList.remove('selected'));
+        element.classList.add('selected');
+        document.getElementById('customAmount').value = '';
+        this.state.amount = amount;
+        this.updateTotal();
+      },
+
+      setCustomAmount() {
+        const value = parseFloat(document.getElementById('customAmount').value);
+        if (value > 0) {
+          document.querySelectorAll('.amount').forEach(btn => btn.classList.remove('selected'));
+          this.state.amount = value;
+          this.updateTotal();
+        }
+      },
+
+      setFrequency(frequency, element) {
+        document.querySelectorAll('.freq-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+        this.state.frequency = frequency;
+      },
+
+      selectPayment(method, element) {
+        document.querySelectorAll('.payment').forEach(btn => btn.classList.remove('selected'));
+        element.classList.add('selected');
+        this.state.paymentMethod = method;
+      },
+
+      updateTotal() {
+        document.getElementById('totalAmount').textContent = `$${this.state.amount.toLocaleString()}`;
+      },
+
+      async process() {
+        if (this.state.processing) return;
+
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('email').value;
+
+        if (!firstName || !lastName || !email) {
+          alert('Please complete all required fields');
+          return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          alert('Please enter a valid email address');
+          return;
+        }
+
+        this.state.processing = true;
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const loading = document.getElementById('loading');
+
+        submitBtn.disabled = true;
+        submitText.style.display = 'none';
+        loading.style.display = 'inline-block';
+
+        try {
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          
+          console.log('Payment processed:', {
+            amount: this.state.amount,
+            frequency: this.state.frequency,
+            paymentMethod: this.state.paymentMethod,
+            designation: document.getElementById('designation').value,
+            donor: {
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              phone: document.getElementById('phone').value
+            }
+          });
+
+          document.getElementById('paymentContent').style.display = 'none';
+          document.getElementById('success').classList.add('active');
+          setTimeout(() => this.close(), 5000);
+        } catch (error) {
+          alert('Payment failed. Please try again.');
+          console.error(error);
+        } finally {
+          submitBtn.disabled = false;
+          submitText.style.display = 'inline';
+          loading.style.display = 'none';
+          this.state.processing = false;
+        }
+      },
+
+      reset() {
+        document.getElementById('paymentContent').style.display = '';
+        document.getElementById('success').classList.remove('active');
+        ['firstName', 'lastName', 'email', 'phone', 'customAmount'].forEach(id => {
+          document.getElementById(id).value = '';
+        });
+        this.state = { amount: 500, frequency: 'once', paymentMethod: 'stripe', processing: false };
+      }
+    };
+
+    // =============== PARTICLE SYSTEM ===============
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // =============== SCROLL EFFECTS ===============
+    function initScrollEffects() {
+      let ticking = false;
+
+      function updateScrollEffects() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const modelContainer = document.getElementById('modelContainer');
+        const nav = document.getElementById('nav');
+
+        // Nav scroll effect
+        nav.classList.toggle('scrolled', scrollY > 50);
+
+        // 3D Model scroll effects
+        if (modelContainer) {
+          const maxScroll = 500;
+          const scrollRatio = Math.min(scrollY / maxScroll, 1);
+          const opacity = 0.8 - (scrollRatio * 0.4);
+          const rotation = scrollRatio * 15;
+          const scale = 1 + (scrollRatio * 0.1);
+
+          modelContainer.style.opacity = Math.max(opacity, 0.4);
+          modelContainer.style.transform = `translateY(-50%) rotateY(${rotation}deg) scale(${scale})`;
+          modelContainer.classList.toggle('scroll-enhanced', scrollY > 100);
+        }
+      }
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateScrollEffects();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+
+    // =============== COLOR FUNCTIONS ===============
+    function copyColor(cssVar, hexValue) {
+      const content = `/* Meauxbility Brand Color */
+:root {
+    ${cssVar}: ${hexValue};
+}
+
+/* Usage Example */
+.my-element {
+    background: var(${cssVar});
+    color: ${hexValue};
+}`;
+      
+      navigator.clipboard.writeText(content).then(() => {
+        showNotification(`Color ${hexValue} copied to clipboard!`);
+      });
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--meaux-orange);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        z-index: 10000;
+        box-shadow: 0 4px 15px rgba(255, 118, 25, 0.3);
+      `;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    // =============== GLOBAL FUNCTIONS ===============
+    function openDonationModal() {
+      PaymentSystem.open();
+    }
+
+    function openPaymentModal() {
+      PaymentSystem.open();
+    }
+
+    function closePaymentModal() {
+      PaymentSystem.close();
+    }
+
+    function selectAmount(amount, element) {
+      PaymentSystem.selectAmount(amount, element);
+    }
+
+    function setCustomAmount() {
+      PaymentSystem.setCustomAmount();
+    }
+
+    function setFrequency(frequency, element) {
+      PaymentSystem.setFrequency(frequency, element);
+    }
+
+    function selectPayment(method, element) {
+      PaymentSystem.selectPayment(method, element);
+    }
+
+    function processPayment() {
+      PaymentSystem.process();
+    }
+
+    function scrollToColors() {
+      document.getElementById('colorsSection').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    // =============== INITIALIZATION ===============
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set current year
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+      
+      // Initialize effects
+      createParticles();
+      initScrollEffects();
+      
+      // Close modals on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const overlay = document.getElementById('paymentOverlay');
+          if (overlay.classList.contains('active')) {
+            PaymentSystem.close();
+          }
+        }
+      });
+
+      // Close modal on overlay click
+      document.getElementById('paymentOverlay').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+          PaymentSystem.close();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

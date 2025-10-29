@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Sponsored Athletes Program - Meauxbility</title>
+    <meta name="description" content="Meet our sponsored athletes who refuse to let mobility challenges define their limits. Join Meauxbility's athlete program and turn your dreams into reality with our support.">
+    <meta name="keywords" content="disability athletes, sponsored athletes, mobility challenges, adaptive sports, Meauxbility athletes, accessibility sponsorship">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZEWHZG1WP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HZEWHZG1WP', {
+        custom_map: {
+          'custom_parameter_1': 'user_type',
+          'custom_parameter_2': 'community_impact',
+          'custom_parameter_3': 'session_id'
+        }
+      });
+    </script>
+
+    <!-- Meauxbility Analytics -->
+    <script src="js/analytics.js"></script>
+    <script src="js/events.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Core Brand Colors - Consistent with Team Page */
+            --meaux-orange: #FF7619;
+            --meaux-teal: #1F97A9;
+            --meaux-green: #21c48c;
+            
+            /* Background System */
+            --meaux-white: #FFFFFF;
+            --meaux-light-gray: #F8FAFB;
+            --meaux-soft-blue: #E8F4F6;
+            
+            /* Text Colors */
+            --meaux-text-primary: #0C2D31;
+            --meaux-text-secondary: #4A5568;
+            --meaux-text-muted: #718096;
+            
+            /* Borders & Shadows */
+            --meaux-border: rgba(31, 151, 169, 0.15);
+            --meaux-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --meaux-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --meaux-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+            
+            /* Layout */
+            --max-width: 1400px;
+            --radius: 16px;
+            --radius-sm: 8px;
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--meaux-text-primary);
+            background: var(--meaux-white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFB 50%, #E8F4F6 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle accent shape */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 118, 25, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+            color: var(--meaux-text-primary);
+        }
+
+        .hero-title .orange {
+            color: var(--meaux-orange);
+        }
+
+        .hero-title .teal {
+            color: var(--meaux-teal);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--meaux-text-secondary);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Athletes Section */
+        .athletes-section {
+            padding: 100px 0;
+            background: var(--meaux-white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: var(--meaux-text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .section-title .meet {
+            color: var(--meaux-orange);
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: var(--meaux-text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .section-subdescription {
+            font-size: 1.125rem;
+            color: var(--meaux-text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Athletes Grid */
+        .athletes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .athlete-card {
+            background: var(--meaux-white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--meaux-shadow-md);
+            border: 1px solid var(--meaux-border);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .athlete-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--meaux-shadow-lg);
+            border-color: var(--meaux-teal);
+        }
+
+        .athlete-image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+        }
+
+        .athlete-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .athlete-card:hover .athlete-image {
+            transform: scale(1.05);
+        }
+
+        /* Card overlay content */
+        .athlete-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
+            padding: 32px 24px 24px;
+            transform: translateY(calc(100% - 80px));
+            transition: var(--transition);
+        }
+
+        .athlete-card:hover .athlete-overlay {
+            transform: translateY(0);
+        }
+
+        .athlete-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--meaux-white);
+            margin-bottom: 8px;
+        }
+
+        .athlete-bio {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+            margin-bottom: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease 0.1s;
+        }
+
+        .athlete-card:hover .athlete-bio {
+            opacity: 1;
+        }
+
+        /* Quick name badge */
+        .athlete-badge {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--meaux-text-primary);
+            box-shadow: var(--meaux-shadow-sm);
+            transition: opacity 0.2s ease;
+        }
+
+        .athlete-card:hover .athlete-badge {
+            opacity: 0;
+        }
+
+        /* Card Actions */
+        .athlete-actions {
+            display: flex;
+            gap: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease 0.1s;
+        }
+
+        .athlete-card:hover .athlete-actions {
+            opacity: 1;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--meaux-white);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--meaux-white);
+        }
+
+        .btn-primary {
+            background: var(--meaux-orange);
+            color: var(--meaux-white);
+        }
+
+        .btn-primary:hover {
+            background: #E85D00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 118, 25, 0.3);
+        }
+
+        /* Mobile Carousel Controls */
+        .carousel-controls {
+            display: none;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .carousel-nav {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--meaux-white);
+            border: 2px solid var(--meaux-teal);
+            color: var(--meaux-teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .carousel-nav:hover {
+            background: var(--meaux-teal);
+            color: var(--meaux-white);
+            transform: scale(1.1);
+        }
+
+        .carousel-nav svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--meaux-light-gray) 0%, var(--meaux-soft-blue) 100%);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 24px;
+            color: var(--meaux-text-primary);
+        }
+
+        .cta-text {
+            font-size: 1.25rem;
+            color: var(--meaux-text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: var(--meaux-orange);
+            color: var(--meaux-white);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 1.125rem;
+            transition: var(--transition);
+            box-shadow: var(--meaux-shadow-md);
+        }
+
+        .cta-button:hover {
+            background: #E85D00;
+            transform: translateY(-3px);
+            box-shadow: var(--meaux-shadow-lg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 80px 0 60px;
+            }
+
+            .athletes-section {
+                padding: 60px 0;
+            }
+
+            .athletes-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+                position: relative;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .athlete-card {
+                display: none;
+            }
+
+            .athlete-card.active {
+                display: block;
+            }
+
+            .carousel-controls {
+                display: flex;
+            }
+
+            .athlete-overlay {
+                transform: translateY(0);
+                padding: 24px 20px 20px;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 100%);
+            }
+
+            .athlete-bio,
+            .athlete-actions {
+                opacity: 1;
+            }
+
+            .athlete-badge {
+                display: none;
+            }
+
+            .cta-section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.875rem;
+            }
+
+            .cta-button {
+                padding: 16px 32px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Empowering <span class="orange">Athletes</span> Who Refuse to <span class="teal">Settle</span>
+                </h1>
+                <p class="hero-subtitle">
+                    At Meauxbility, we sponsor individuals facing mobility challenges who are ready to put in the work 
+                    and chase their dreams. Every champion starts with a choice—the choice to fight for more.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Athletes Section -->
+    <section class="athletes-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="meet">Meet</span> Our Athletes
+                </h2>
+                <p class="section-description">
+                    These aren't just athletes—they're warriors who turned obstacles into opportunities.
+                </p>
+                <p class="section-subdescription">
+                    Every journey is different. Every dream is valid. Every fighter deserves a chance to prove what's possible.
+                </p>
+            </div>
+
+            <div class="athletes-grid" id="athletesGrid">
+                <!-- DonMichael Card -->
+                <article class="athlete-card active" data-athlete="donmichael">
+                    <div class="athlete-image-container">
+                        <img 
+                            src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/me-an-don-cajun-muscle-2.jpg?v=1754012437" 
+                            alt="DonMichael - Meauxbility Sponsored Athlete"
+                            class="athlete-image"
+                            loading="lazy"
+                        >
+                        <div class="athlete-badge">DonMichael</div>
+                        <div class="athlete-overlay">
+                            <h3 class="athlete-name">DonMichael</h3>
+                            <p class="athlete-bio">
+                                DonMichael's comeback story proves nothing is impossible when you find your tribe and refuse to quit.
+                            </p>
+                            <div class="athlete-actions">
+                                <a href="/pages/athletes#donmichael" class="btn btn-outline">
+                                    Learn More
+                                </a>
+                                <a href="https://www.paypal.com/ncp/payment/5KY7G9R74LT5G" class="btn btn-primary" target="_blank" rel="noopener">
+                                    Sponsor
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Sam Card -->
+                <article class="athlete-card active" data-athlete="sam">
+                    <div class="athlete-image-container">
+                        <img 
+                            src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/photoroom-20231106-050738_16bf4bf6-645a-44ff-b425-55dbf1c99721.jpg?v=1754012432" 
+                            alt="Sam Primeaux - Meauxbility Founder and Athlete"
+                            class="athlete-image"
+                            loading="lazy"
+                        >
+                        <div class="athlete-badge">Sam Primeaux</div>
+                        <div class="athlete-overlay">
+                            <h3 class="athlete-name">Sam Primeaux</h3>
+                            <p class="athlete-bio">
+                                From Louisiana to the world, Sam inspires others by overcoming paralysis and giving back to the community.
+                            </p>
+                            <div class="athlete-actions">
+                                <a href="https://meauxbility.org/pages/sams-story" class="btn btn-outline">
+                                    Learn More
+                                </a>
+                                <a href="https://www.paypal.com/ncp/payment/5KY7G9R74LT5G" class="btn btn-primary" target="_blank" rel="noopener">
+                                    Sponsor
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Mobile Carousel Controls -->
+            <div class="carousel-controls">
+                <button class="carousel-nav" id="prevBtn" aria-label="Previous athlete">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18L9 12L15 6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="carousel-nav" id="nextBtn" aria-label="Next athlete">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Support a Fighter?</h2>
+                <p class="cta-text">
+                    Your sponsorship directly impacts an athlete's journey. From equipment to travel, 
+                    from training to recovery—every dollar helps someone prove that limitations are just starting points.
+                </p>
+                <a href="https://www.paypal.com/ncp/payment/5KY7G9R74LT5G" class="cta-button" target="_blank" rel="noopener">
+                    Become a Sponsor Today
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile carousel functionality
+        let currentIndex = 0;
+        const cards = document.querySelectorAll('.athlete-card');
+        const totalCards = cards.length;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function showCard(index) {
+            cards.forEach((card, i) => {
+                if (window.innerWidth <= 768) {
+                    card.classList.toggle('active', i === index);
+                } else {
+                    card.classList.add('active');
+                }
+            });
+        }
+
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % totalCards;
+            showCard(currentIndex);
+        }
+
+        function prevCard() {
+            currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+            showCard(currentIndex);
+        }
+
+        // Event listeners
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', prevCard);
+            nextBtn.addEventListener('click', nextCard);
+        }
+
+        // Handle resize
+        function handleResize() {
+            if (window.innerWidth > 768) {
+                cards.forEach(card => card.classList.add('active'));
+            } else {
+                showCard(currentIndex);
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        // Touch support for mobile swipe
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        const athletesGrid = document.getElementById('athletesGrid');
+
+        athletesGrid.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        athletesGrid.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextCard();
+                } else {
+                    prevCard();
+                }
+            }
+        }
+
+        // Add fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>

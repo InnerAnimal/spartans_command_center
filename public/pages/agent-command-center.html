@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5.0,user-scalable=yes">
+<title>Meauxbility Agent Command Center</title>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HZEWHZG1WP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HZEWHZG1WP', {
+    custom_map: {
+      'custom_parameter_1': 'user_type',
+      'custom_parameter_2': 'community_impact',
+      'custom_parameter_3': 'session_id'
+    }
+  });
+</script>
+
+<!-- Meauxbility Analytics -->
+<script src="js/analytics.js"></script>
+<script src="js/events.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,system-ui,sans-serif;background:linear-gradient(135deg,#051b1e 0%,#0a2427 50%,#1a4a52 100%);min-height:100vh;color:#f0f9fa;overflow-x:hidden}
+
+/* Header */
+.header{padding:2rem;text-align:center;position:relative;z-index:10}
+.logo{width:60px;height:60px;background:linear-gradient(135deg,#FF6B35,#E85D00);border-radius:12px;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:bold;color:#fff;box-shadow:0 10px 30px rgba(255,107,53,0.3)}
+.title{font-size:2.5rem;font-weight:900;margin-bottom:0.5rem;background:linear-gradient(135deg,#4ABAB8,#339999);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:glow 3s ease-in-out infinite}
+.subtitle{color:rgba(240,249,250,0.7);font-size:1.125rem}
+
+@keyframes glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.2)}}
+
+/* Agent Carousel */
+.carousel-container{position:relative;padding:3rem 0;overflow:hidden}
+.carousel{display:flex;gap:2rem;padding:0 calc(50vw - 250px);transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);will-change:transform}
+
+/* Agent Cards */
+.agent-card{min-width:500px;height:600px;background:rgba(26,74,82,0.4);backdrop-filter:blur(20px);border:1px solid rgba(74,171,184,0.2);border-radius:24px;padding:2rem;cursor:pointer;transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);position:relative;overflow:hidden;display:flex;flex-direction:column}
+
+.agent-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(255,107,53,0.8),transparent);transform:translateX(-100%);transition:transform 0.8s}
+
+.agent-card:hover{transform:scale(1.05) translateY(-10px);background:rgba(26,74,82,0.6);border-color:rgba(255,107,53,0.5);box-shadow:0 20px 60px rgba(255,107,53,0.2)}
+
+.agent-card:hover::before{transform:translateX(100%)}
+
+.agent-card.active{background:rgba(51,153,153,0.3);border-color:#339999;box-shadow:0 20px 60px rgba(51,153,153,0.3)}
+
+/* Tier Badge */
+.tier-badge{position:absolute;top:1.5rem;right:1.5rem;padding:0.5rem 1rem;background:linear-gradient(135deg,rgba(255,107,53,0.2),rgba(255,107,53,0.1));border:1px solid rgba(255,107,53,0.3);border-radius:20px;font-size:0.875rem;font-weight:600;color:#FF6B35}
+
+.tier-badge.gold{background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,193,0,0.1));border-color:rgba(255,215,0,0.5);color:#FFD700}
+
+.tier-badge.platinum{background:linear-gradient(135deg,rgba(229,228,226,0.2),rgba(186,186,186,0.1));border-color:rgba(229,228,226,0.5);color:#E5E4E2}
+
+/* Agent Icon */
+.agent-icon{width:120px;height:120px;background:linear-gradient(135deg,rgba(51,153,153,0.2),rgba(51,153,153,0.05));border:2px solid rgba(51,153,153,0.3);border-radius:50%;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;font-size:4rem;transition:all 0.3s;position:relative}
+
+.agent-card:hover .agent-icon{transform:rotate(10deg) scale(1.1);border-color:#339999;background:linear-gradient(135deg,rgba(51,153,153,0.3),rgba(51,153,153,0.1))}
+
+.agent-icon::after{content:'';position:absolute;inset:-4px;border:2px solid transparent;border-radius:50%;background:conic-gradient(from 0deg,transparent,#339999,transparent);opacity:0;transition:opacity 0.3s;animation:spin 3s linear infinite;z-index:-1}
+
+.agent-card:hover .agent-icon::after{opacity:1}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Agent Details */
+.agent-name{font-size:1.75rem;font-weight:700;margin-bottom:0.5rem;color:#f0f9fa}
+
+.agent-role{color:#4ABAB8;font-size:1rem;margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:0.05em}
+
+.agent-desc{color:rgba(240,249,250,0.8);line-height:1.6;margin-bottom:1.5rem;flex:1}
+
+/* Capabilities */
+.capabilities{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem}
+
+.cap-tag{padding:0.375rem 0.75rem;background:rgba(51,153,153,0.1);border:1px solid rgba(51,153,153,0.2);border-radius:12px;font-size:0.75rem;color:#4ABAB8}
+
+/* Access Level */
+.access-bar{height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;margin-bottom:0.5rem}
+
+.access-fill{height:100%;background:linear-gradient(90deg,#339999,#4ABAB8);border-radius:4px;transition:width 1s cubic-bezier(0.4,0,0.2,1)}
+
+.access-label{font-size:0.875rem;color:rgba(240,249,250,0.6);display:flex;justify-content:space-between}
+
+/* Launch Button */
+.launch-btn{padding:1rem;background:linear-gradient(135deg,#339999,#2C8B8B);color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.3s;text-transform:uppercase;letter-spacing:0.05em;position:relative;overflow:hidden}
+
+.launch-btn::after{content:'→';position:absolute;right:20px;top:50%;transform:translateY(-50%);opacity:0;transition:all 0.3s}
+
+.launch-btn:hover{padding-right:3rem;background:linear-gradient(135deg,#4ABAB8,#339999);transform:translateY(-2px);box-shadow:0 10px 30px rgba(51,153,153,0.3)}
+
+.launch-btn:hover::after{opacity:1;right:15px}
+
+/* Navigation */
+.nav-dots{display:flex;justify-content:center;gap:0.75rem;margin-top:2rem}
+
+.dot{width:12px;height:12px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:50%;cursor:pointer;transition:all 0.3s}
+
+.dot.active{width:32px;border-radius:6px;background:#339999;border-color:#339999}
+
+/* Navigation Arrows */
+.nav-arrow{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;background:rgba(51,153,153,0.2);border:1px solid rgba(51,153,153,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;z-index:10;color:#4ABAB8;font-size:1.5rem}
+
+.nav-arrow:hover{background:rgba(51,153,153,0.4);border-color:#339999;transform:translateY(-50%) scale(1.1)}
+
+.nav-arrow.prev{left:2rem}
+.nav-arrow.next{right:2rem}
+
+/* Status Indicator */
+.status{position:fixed;top:2rem;right:2rem;padding:1rem 1.5rem;background:rgba(33,196,140,0.2);border:1px solid rgba(33,196,140,0.3);border-radius:12px;display:flex;align-items:center;gap:0.75rem;z-index:100}
+
+.status-dot{width:12px;height:12px;background:#21c48c;border-radius:50%;animation:pulse 2s infinite}
+
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(33,196,140,0.4)}50%{box-shadow:0 0 0 12px rgba(33,196,140,0)}}
+
+/* Floating Quick Access */
+.quick-access{position:fixed;bottom:2rem;right:2rem;width:300px;background:rgba(26,74,82,0.95);backdrop-filter:blur(20px);border:1px solid rgba(74,171,184,0.3);border-radius:20px;padding:1.5rem;z-index:100;transform:translateY(400px);transition:transform 0.3s cubic-bezier(0.68,-0.55,0.265,1.55)}
+
+.quick-access.show{transform:translateY(0)}
+
+.qa-title{font-size:1rem;font-weight:600;margin-bottom:1rem;color:#4ABAB8}
+
+.qa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem}
+
+.qa-btn{padding:0.75rem;background:rgba(51,153,153,0.1);border:1px solid rgba(51,153,153,0.2);border-radius:8px;color:#f0f9fa;cursor:pointer;transition:all 0.3s;text-align:center;font-size:0.875rem}
+
+.qa-btn:hover{background:rgba(51,153,153,0.3);border-color:#339999;transform:translateY(-2px)}
+
+/* Mobile */
+@media(max-width:768px){
+.carousel{padding:0 2rem}
+.agent-card{min-width:calc(100vw - 4rem);height:auto}
+.nav-arrow{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+<div class="logo">M</div>
+<h1 class="title">Agent Command Center</h1>
+<p class="subtitle">Select your agent to unlock capabilities</p>
+</header>
+
+<!-- Status Indicator -->
+<div class="status">
+<div class="status-dot"></div>
+<span>All Systems Operational</span>
+</div>
+
+<!-- Agent Carousel -->
+<div class="carousel-container">
+<button class="nav-arrow prev" onclick="C.prev()">‹</button>
+<button class="nav-arrow next" onclick="C.next()">›</button>
+
+<div class="carousel" id="carousel">
+<!-- Agent 1 -->
+<div class="agent-card" onclick="A.launch(1)">
+<span class="tier-badge">Tier 1</span>
+<div class="agent-icon">🚀</div>
+<h3 class="agent-name">Builder Agent</h3>
+<p class="agent-role">Content Creation Suite</p>
+<p class="agent-desc">Full access to page builders, email designers, and content generation tools. Create anything from landing pages to campaigns.</p>
+<div class="capabilities">
+<span class="cap-tag">Page Builder</span>
+<span class="cap-tag">Email Designer</span>
+<span class="cap-tag">AI Writer</span>
+</div>
+<div class="access-bar"><div class="access-fill" style="width:100%"></div></div>
+<div class="access-label"><span>Full Access</span><span>100%</span></div>
+<button class="launch-btn">Launch Agent</button>
+</div>
+
+<!-- Agent 2 -->
+<div class="agent-card" onclick="A.launch(2)">
+<span class="tier-badge gold">Tier 2</span>
+<div class="agent-icon">📊</div>
+<h3 class="agent-name">Analytics Agent</h3>
+<p class="agent-role">Data Intelligence</p>
+<p class="agent-desc">Advanced analytics, reporting, and data visualization. Track performance, generate insights, and optimize campaigns.</p>
+<div class="capabilities">
+<span class="cap-tag">Real-time Data</span>
+<span class="cap-tag">Custom Reports</span>
+<span class="cap-tag">Predictive</span>
+</div>
+<div class="access-bar"><div class="access-fill" style="width:90%"></div></div>
+<div class="access-label"><span>Advanced Access</span><span>90%</span></div>
+<button class="launch-btn">Launch Agent</button>
+</div>
+
+<!-- Agent 3 -->
+<div class="agent-card" onclick="A.launch(3)">
+<span class="tier-badge">Tier 3</span>
+<div class="agent-icon">🤝</div>
+<h3 class="agent-name">Outreach Agent</h3>
+<p class="agent-role">Donor Relations</p>
+<p class="agent-desc">Manage donor relationships, automate thank-you messages, and coordinate fundraising campaigns with precision.</p>
+<div class="capabilities">
+<span class="cap-tag">CRM Integration</span>
+<span class="cap-tag">Email Automation</span>
+<span class="cap-tag">Donor Tracking</span>
+</div>
+<div class="access-bar"><div class="access-fill" style="width:85%"></div></div>
+<div class="access-label"><span>Enhanced Access</span><span>85%</span></div>
+<button class="launch-btn">Launch Agent</button>
+</div>
+
+<!-- Agent 4 -->
+<div class="agent-card" onclick="A.launch(4)">
+<span class="tier-badge platinum">Tier 4</span>
+<div class="agent-icon">🎯</div>
+<h3 class="agent-name">Campaign Agent</h3>
+<p class="agent-role">Marketing Automation</p>
+<p class="agent-desc">Orchestrate multi-channel campaigns, A/B testing, and audience segmentation with advanced marketing tools.</p>
+<div class="capabilities">
+<span class="cap-tag">Multi-channel</span>
+<span class="cap-tag">A/B Testing</span>
+<span class="cap-tag">Segmentation</span>
+</div>
+<div class="access-bar"><div class="access-fill" style="width:95%"></div></div>
+<div class="access-label"><span>Premium Access</span><span>95%</span></div>
+<button class="launch-btn">Launch Agent</button>
+</div>
+
+<!-- Agent 5 -->
+<div class="agent-card" onclick="A.launch(5)">
+<span class="tier-badge">Tier 5</span>
+<div class="agent-icon">💰</div>
+<h3 class="agent-name">Finance Agent</h3>
+<p class="agent-role">Financial Management</p>
+<p class="agent-desc">Complete financial oversight including budgeting, forecasting, grant tracking, and automated reporting.</p>
+<div class="capabilities">
+<span class="cap-tag">Budgeting</span>
+<span class="cap-tag">Grant Tracking</span>
+<span class="cap-tag">Forecasting</span>
+</div>
+<div class="access-bar"><div class="access-fill" style="width:80%"></div></div>
+<div class="access-label"><span>Finance Access</span><span>80%</span></div>
+<button class="launch-btn">Launch Agent</button>
+</div>
+
+<!-- Agent 6 -->
+<div class="agent-card" onclick="A.launch(6)">
+<span class="tier-badge gold">Tier 6</span>
+<div class="agent-icon">📱</div>
+<h3 class="agent-name">Social Agent</h3>
+<p class="agent-role">Social Media Suite</p>
+<p class="agent-desc">Schedule posts, monitor engagement, and manage all social platforms from one unified dashboard.</p>
+<div class="capabilities">
+<span class="cap-tag">Multi-platform</span>
+<span class="cap-tag">Scheduling</span>
+<span class="cap-tag">Analytics</span>
+</div>
+<div class="access-bar"><div class="access-fill" style="width:88%"></div></div>
+<div class="access-label"><span>Social Access</span><span>88%</span></div>
+<button class="launch-btn">Launch Agent</button>
+</div>
+
+<!-- Agent 7 -->
+<div class="agent-card" onclick="A.launch(7)">
+<span class="tier-badge">Tier 7</span>
+<div class="agent-icon">🎓</div>
+<h3 class="agent-name">Training Agent</h3>
+<p class="agent-role">Learning & Development</p>
+<p class="agent-desc">Create and manage training programs, track volunteer progress, and build educational content.</p>
+<div class="capabilities">
+<span class="cap-tag">Course Builder</span>
+<span class="cap-tag">Progress Tracking</span>
+<span class="cap-tag">Certificates</span>
+</div>
+<div class="access-bar"><div class="access-fill" style="width:75%"></div></div>
+<div class="access-label"><span>Training Access</span><span>75%</span></div>
+<button class="launch-btn">Launch Agent</button>
+</div>
+
+<!-- Agent 8 -->
+<div class="agent-card" onclick="A.launch(8)">
+<span class="tier-badge platinum">Tier 8</span>
+<div class="agent-icon">🛡️</div>
+<h3 class="agent-name">Security Agent</h3>
+<p class="agent-role">System Protection</p>
+<p class="agent-desc">Monitor security, manage permissions, audit access logs, and ensure compliance across all systems.</p>
+<div class="capabilities">
+<span class="cap-tag">Audit Logs</span>
+<span class="cap-tag">Permissions</span>
+<span class="cap-tag">Compliance</span>
+</div>
+<div class="access-bar"><div class="access-fill" style="width:100%"></div></div>
+<div class="access-label"><span>Security Access</span><span>100%</span></div>
+<button class="launch-btn">Launch Agent</button>
+</div>
+
+<!-- Agent 9 -->
+<div class="agent-card" onclick="A.launch(9)">
+<span class="tier-badge gold">Tier 9</span>
+<div class="agent-icon">🌐</div>
+<h3 class="agent-name">Integration Agent</h3>
+<p class="agent-role">API & Connections</p>
+<p class="agent-desc">Connect with external services, manage APIs, sync data across platforms, and automate workflows.</p>
+<div class="capabilities">
+<span class="cap-tag">API Manager</span>
+<span class="cap-tag">Webhooks</span>
+<span class="cap-tag">Sync Engine</span>
+</div>
+<div class="access-bar"><div class="access-fill" style="width:92%"></div></div>
+<div class="access-label"><span>Integration Access</span><span>92%</span></div>
+<button class="launch-btn">Launch Agent</button>
+</div>
+
+<!-- Agent 10 -->
+<div class="agent-card" onclick="A.launch(10)">
+<span class="tier-badge platinum">Tier 10</span>
+<div class="agent-icon">⚡</div>
+<h3 class="agent-name">Master Agent</h3>
+<p class="agent-role">Full System Control</p>
+<p class="agent-desc">Unrestricted access to all systems, tools, and capabilities. The ultimate command center for administrators.</p>
+<div class="capabilities">
+<span class="cap-tag">All Systems</span>
+<span class="cap-tag">Override</span>
+<span class="cap-tag">God Mode</span>
+</div>
+<div class="access-bar"><div class="access-fill" style="width:100%"></div></div>
+<div class="access-label"><span>Unlimited Access</span><span>100%</span></div>
+<button class="launch-btn">Launch Agent</button>
+</div>
+</div>
+</div>
+
+<!-- Navigation Dots -->
+<div class="nav-dots" id="dots"></div>
+
+<!-- Quick Access Panel -->
+<div class="quick-access" id="quick">
+<h4 class="qa-title">Quick Access</h4>
+<div class="qa-grid">
+<div class="qa-btn" onclick="A.quick('data')">📊 Data</div>
+<div class="qa-btn" onclick="A.quick('build')">🔨 Build</div>
+<div class="qa-btn" onclick="A.quick('social')">📱 Social</div>
+<div class="qa-btn" onclick="A.quick('email')">✉️ Email</div>
+<div class="qa-btn" onclick="A.quick('report')">📈 Report</div>
+<div class="qa-btn" onclick="A.quick('help')">❓ Help</div>
+</div>
+</div>
+
+<script>
+// Carousel Controller
+const C={
+i:0,
+t:10,
+init(){
+this.dots();
+this.auto();
+this.keys();
+},
+dots(){
+const d=document.getElementById('dots');
+for(let i=0;i<this.t;i++){
+const dot=document.createElement('div');
+dot.className=i===0?'dot active':'dot';
+dot.onclick=()=>this.go(i);
+d.appendChild(dot);
+}
+},
+go(i){
+this.i=i;
+const c=document.getElementById('carousel');
+c.style.transform=`translateX(${-i*520}px)`;
+document.querySelectorAll('.dot').forEach((d,n)=>{
+d.className=n===i?'dot active':'dot';
+});
+},
+prev(){
+this.go(this.i>0?this.i-1:this.t-1);
+},
+next(){
+this.go(this.i<this.t-1?this.i+1:0);
+},
+auto(){
+setInterval(()=>this.next(),8000);
+},
+keys(){
+document.addEventListener('keydown',e=>{
+if(e.key==='ArrowLeft')this.prev();
+if(e.key==='ArrowRight')this.next();
+});
+}
+};
+
+// Agent System
+const A={
+launch(id){
+// Store selected agent
+localStorage.setItem('selectedAgent',id);
+// Show loading state
+this.loading(id);
+// Navigate to appropriate dashboard
+setTimeout(()=>{
+switch(id){
+case 1:location.href='/pages/builder-suite';break;
+case 2:location.href='/pages/analytics-dashboard';break;
+case 3:location.href='/pages/donor-management';break;
+case 4:location.href='/pages/campaign-center';break;
+case 5:location.href='/pages/finance-dashboard';break;
+case 6:location.href='/pages/social-hub';break;
+case 7:location.href='/pages/training-center';break;
+case 8:location.href='/pages/security-panel';break;
+case 9:location.href='/pages/integration-hub';break;
+case 10:location.href='/pages/admin-portal';break;
+}
+},1500);
+},
+loading(id){
+const card=event.currentTarget;
+card.style.background='rgba(51,153,153,0.5)';
+card.style.transform='scale(0.95)';
+const btn=card.querySelector('.launch-btn');
+btn.textContent='Initializing...';
+btn.style.background='linear-gradient(135deg,#21c48c,#1a9b70)';
+},
+quick(type){
+console.log(`Quick access: ${type}`);
+// Quick action handling
+alert(`Opening ${type} panel...`);
+}
+};
+
+// Quick Access Toggle
+let qa=false;
+document.addEventListener('keydown',e=>{
+if(e.key==='q'&&(e.ctrlKey||e.metaKey)){
+e.preventDefault();
+qa=!qa;
+document.getElementById('quick').classList.toggle('show',qa);
+}
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded',()=>{
+C.init();
+// Show quick access hint
+setTimeout(()=>{
+const q=document.getElementById('quick');
+q.classList.add('show');
+setTimeout(()=>q.classList.remove('show'),3000);
+},2000);
+});
+
+// Smooth parallax on mouse move
+document.addEventListener('mousemove',e=>{
+const cards=document.querySelectorAll('.agent-card');
+cards.forEach(card=>{
+const rect=card.getBoundingClientRect();
+const x=(e.clientX-rect.left-rect.width/2)/20;
+const y=(e.clientY-rect.top-rect.height/2)/20;
+card.style.transform=`perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
+});
+});
+</script>
+
+</body>
+</html>

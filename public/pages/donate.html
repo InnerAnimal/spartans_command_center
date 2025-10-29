@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Donate - Meauxbility</title>
+<meta name="description" content="Support Meauxbility's mission to empower spinal cord injury survivors. Your donation helps provide mobility grants, equipment, and community support.">
+<meta name="keywords" content="donate, meauxbility, spinal cord injury, mobility grants, 501c3, non-profit, donation">
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content="Donate - Meauxbility">
+<meta property="og:description" content="Support our mission to empower spinal cord injury survivors with mobility, independence, and hope.">
+<meta property="og:image" content="https://meauxbility.org/assets/images/og-donate.jpg">
+<meta property="og:url" content="https://meauxbility.org/pages/donate">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Donate - Meauxbility">
+<meta name="twitter:description" content="Support our mission to empower spinal cord injury survivors.">
+<meta name="twitter:image" content="https://meauxbility.org/assets/images/twitter-donate.jpg">
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+
+<!-- Stripe Payment Integration -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HZEWHZG1WP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HZEWHZG1WP', {
+    custom_map: {
+      'custom_parameter_1': 'user_type',
+      'custom_parameter_2': 'community_impact',
+      'custom_parameter_3': 'session_id'
+    }
+  });
+</script>
+
+<!-- Meauxbility Analytics -->
+<script src="/js/analytics.js"></script>
+<script src="/js/events.js"></script>
+
+<!-- Navigation Styles -->
+<style>
+:root{--teal:#339999;--orange:#FF6B35;--orange-dark:#E85D00;--purple:#9B59B6;--mint:#4AECDC;--nav-h:72px;--nav-hs:60px;--max-w:1440px;--tr:all .3s cubic-bezier(.4,0,.2,1)}
+
+[data-theme=light]{--nav-bg:rgba(255,255,255,.75);--nav-bg-scrolled:rgba(255,255,255,.85);--nav-border:rgba(255,107,53,.15);--nav-text:#0C2D31;--nav-link:#FF6B35;--nav-hover:#E85D00;--nav-hover-bg:rgba(255,107,53,.08);--mobile-bg:rgba(255,255,255,.90);--btn-bg:#FF6B35;--btn-hover:#E85D00;--accent:#FF6B35}
+
+[data-theme=dark]{--nav-bg:rgba(12,45,49,.75);--nav-bg-scrolled:rgba(12,45,49,.85);--nav-border:rgba(74,236,220,.2);--nav-text:rgba(255,255,255,.95);--nav-link:#4AECDC;--nav-hover:#5FDDDC;--nav-hover-bg:rgba(74,236,220,.1);--mobile-bg:rgba(12,45,49,.90);--btn-bg:#9B59B6;--btn-hover:#8E44AD;--accent:#4AECDC}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;padding-top:var(--nav-h);color:#0C2D31;line-height:1.6;min-height:100vh;background:#fafafa}
+[data-theme=dark] body{background:#0a1f22;color:rgba(255,255,255,.95)}
+body.modal-open{overflow:hidden}
+
+.skip-link{position:absolute;top:-100px;left:16px;padding:12px 24px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;border-radius:8px;z-index:10001;transition:var(--tr)}.skip-link:focus{top:16px}
+
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:var(--nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--nav-border);z-index:9999;transition:var(--tr)}
+
+.nav.scrolled{height:var(--nav-hs);background:var(--nav-bg-scrolled);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px)}
+
+.nav-container{max-width:var(--max-w);height:100%;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+
+.nav-logo{display:flex;align-items:center;text-decoration:none;transition:var(--tr)}.nav-logo:hover{transform:scale(.98)}.nav-logo:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}.nav-logo picture{display:block;width:180px;height:auto;transition:var(--tr)}.nav-logo img{width:100%;height:auto;display:block}.nav.scrolled .nav-logo picture{width:160px}
+
+[data-theme=dark] .nav-logo img{filter:hue-rotate(220deg) saturate(1.2) brightness(1.1)}
+
+.nav-menu{display:flex;align-items:center;gap:4px;list-style:none;height:100%}
+.nav-item{position:relative;height:100%;display:flex;align-items:center}
+
+.nav-link{position:relative;padding:10px 18px;color:var(--nav-link);text-decoration:none;font-size:14px;font-weight:600;border-radius:8px;transition:var(--tr);white-space:nowrap;min-height:44px;display:flex;align-items:center;letter-spacing:0.2px}
+
+.nav-link::after{content:'';position:absolute;bottom:8px;left:18px;right:18px;height:0;background:var(--accent);border-radius:2px;transition:height .3s cubic-bezier(.34,1.56,.64,1)}
+
+.nav-link:hover{color:var(--nav-hover);background:var(--nav-hover-bg)}
+
+.nav-link.active,.nav-link[aria-current=page]{color:var(--nav-hover);font-weight:700}
+
+.nav-link.active::after,.nav-link[aria-current=page]::after{height:3px}
+
+.nav-donate{margin-left:12px;padding:11px 26px;background:var(--btn-bg);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:var(--tr);min-height:44px;letter-spacing:.4px;text-decoration:none;display:flex;align-items:center}
+
+.nav-donate:hover{background:var(--btn-hover);transform:translateY(-1px)}
+
+.burger{display:none;background:transparent;border:0;padding:8px;cursor:pointer;position:relative;z-index:10001;min-width:44px;min-height:44px;border-radius:8px;transition:var(--tr)}.burger:hover{background:var(--nav-hover-bg)}.burger span{display:block;width:24px;height:3px;background:var(--nav-link);margin:4px 0;transition:var(--tr);border-radius:2px}.burger.open span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.burger.open span:nth-child(2){opacity:0}.burger.open span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px)}
+
+.mobile-menu{position:fixed;inset:0;background:var(--mobile-bg);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);transform:translateY(-100%);opacity:0;visibility:hidden;transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .3s ease;z-index:9998;display:flex;flex-direction:column;padding:84px 24px 24px;overflow-y:auto}.mobile-menu.open{transform:translateY(0);opacity:1;visibility:visible}
+
+.mobile-nav{display:flex;flex-direction:column;gap:2px;list-style:none;margin-bottom:24px}
+
+.mobile-item{border-bottom:1px solid var(--nav-border);padding:16px 0;min-height:56px}
+
+.mobile-link{color:var(--nav-link);text-decoration:none;font-size:16px;font-weight:600;transition:var(--tr);letter-spacing:0.1px;display:flex;align-items:center;position:relative}
+
+.mobile-link.active{color:var(--nav-hover);font-weight:700}
+
+.mobile-link.active::after{content:'';position:absolute;left:0;bottom:-16px;right:0;height:3px;background:var(--accent);border-radius:2px}
+
+.mobile-donate{background:var(--btn-bg);color:#fff;margin-top:24px;cursor:pointer;font-size:16px;font-weight:700;padding:18px 24px;border-radius:10px;transition:var(--tr);min-height:60px;letter-spacing:.6px;border:none;width:100%;text-decoration:none;display:flex;align-items:center;justify-content:center}
+
+.mobile-donate:hover{background:var(--btn-hover);transform:translateY(-1px)}
+
+@media(max-width:980px){.nav-container{padding:0 20px}.nav-menu,.nav-donate{display:none}.burger{display:block}.theme-toggle{top:90px;right:20px}}
+@media(max-width:640px){.nav-container{padding:0 16px}.nav-logo picture{width:150px}.nav.scrolled .nav-logo picture{width:135px}.mobile-link{font-size:15px}.theme-toggle{top:85px;right:16px;padding:8px 16px;font-size:12px}}
+@media(max-width:380px){.nav-logo picture{width:130px}.nav.scrolled .nav-logo picture{width:120px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+*:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* Page Content Styles */
+.page-content {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 80px 32px;
+    min-height: calc(100vh - var(--nav-h));
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.page-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    color: var(--nav-text);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    color: var(--nav-link);
+    font-weight: 600;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.4;
+}
+
+.donation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 80px;
+}
+
+.donation-form {
+    background: var(--nav-bg);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--nav-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.donation-info {
+    padding: 40px 0;
+}
+
+.donation-info h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: var(--nav-text);
+    margin-bottom: 24px;
+}
+
+.donation-info p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--nav-text);
+    margin-bottom: 20px;
+}
+
+.impact-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 40px 0;
+}
+
+.stat-card {
+    background: var(--nav-bg);
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--nav-border);
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--nav-text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--nav-text);
+    margin-bottom: 8px;
+    font-size: 0.875rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid var(--nav-border);
+    border-radius: 12px;
+    background: var(--nav-bg);
+    color: var(--nav-text);
+    font-size: 16px;
+    transition: var(--tr);
+    font-family: 'Inter', sans-serif;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+}
+
+.amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.amount-btn {
+    padding: 16px;
+    border: 2px solid var(--nav-border);
+    border-radius: 12px;
+    background: var(--nav-bg);
+    color: var(--nav-text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--tr);
+    font-size: 16px;
+}
+
+.amount-btn:hover {
+    border-color: var(--accent);
+    background: rgba(255,107,53,0.1);
+}
+
+.amount-btn.selected {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: white;
+}
+
+.frequency-toggle {
+    display: flex;
+    background: var(--nav-border);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 24px;
+}
+
+.frequency-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: var(--nav-text);
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: var(--tr);
+}
+
+.frequency-btn.active {
+    background: var(--accent);
+    color: white;
+}
+
+.donate-btn {
+    width: 100%;
+    padding: 20px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--tr);
+    letter-spacing: 0.5px;
+}
+
+.donate-btn:hover {
+    background: var(--btn-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.donate-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+@media (max-width: 768px) {
+    .page-content {
+        padding: 60px 20px;
+    }
+    
+    .donation-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .donation-form {
+        padding: 24px;
+    }
+    
+    .impact-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .amount-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+</head>
+<body data-theme="light">
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header class="nav" id="nav" role="banner">
+<div class="nav-container">
+<a href="/" class="nav-logo" aria-label="Meauxbility Home">
+<picture>
+<source srcset="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+<img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.png?v=1760648662" alt="Meauxbility" width="180" height="180" loading="eager" fetchpriority="high">
+</picture>
+</a>
+
+<nav aria-label="Main navigation">
+<ul class="nav-menu">
+<li><a class="nav-link" href="/">Home</a></li>
+<li><a class="nav-link" href="/pages/about-us">About</a></li>
+<li><a class="nav-link" href="/pages/mobility-grants-programs">Programs</a></li>
+<li><a class="nav-link" href="/pages/community">Community</a></li>
+<li><a class="nav-link" href="/pages/resources">Resources</a></li>
+<li><a class="nav-link" href="/pages/get-involved">Connect</a></li>
+<li><a class="nav-link active" href="/pages/donate" aria-current="page">Impact</a></li>
+</ul>
+</nav>
+
+<button class="burger" id="burger" aria-label="Toggle navigation menu" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
+</div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+<ul class="mobile-nav">
+<li class="mobile-item"><a href="/" class="mobile-link">Home</a></li>
+<li class="mobile-item"><a href="/pages/about-us" class="mobile-link">About</a></li>
+<li class="mobile-item"><a href="/pages/mobility-grants-programs" class="mobile-link">Programs</a></li>
+<li class="mobile-item"><a href="/pages/community" class="mobile-link">Community</a></li>
+<li class="mobile-item"><a href="/pages/resources" class="mobile-link">Resources</a></li>
+<li class="mobile-item"><a href="/pages/get-involved" class="mobile-link">Connect</a></li>
+</ul>
+<a class="mobile-donate active" href="/pages/donate">Impact</a>
+</nav>
+
+<main id="main">
+<div class="page-content">
+    <div class="page-header" data-mission-element="donate_header">
+        <h1 class="page-title">Make an Impact</h1>
+        <p class="page-subtitle">Your donation transforms lives and creates pathways to independence</p>
+    </div>
+
+    <div class="donation-grid">
+        <div class="donation-info" data-mission-element="donation_info">
+            <h2>Why Your Support Matters</h2>
+            <p>Every dollar you donate directly supports spinal cord injury survivors in Louisiana's Acadiana region. Your contribution helps us provide mobility grants, adaptive equipment, and community support that transforms lives.</p>
+            
+            <p>As a 501(c)(3) non-profit organization, your donation is tax-deductible and goes directly to our programs that empower individuals to live independently and pursue their dreams.</p>
+
+            <div class="impact-stats" data-impact-metric="donation_impact">
+                <div class="stat-card" data-impact-metric="lives_transformed">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Lives Transformed</div>
+                </div>
+                <div class="stat-card" data-impact-metric="grants_awarded">
+                    <div class="stat-number">$100K+</div>
+                    <div class="stat-label">Grants Awarded</div>
+                </div>
+                <div class="stat-card" data-impact-metric="community_partners">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Community Partners</div>
+                </div>
+                <div class="stat-card" data-impact-metric="parish_coverage">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Parishes Served</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="donation-form" id="donation-form">
+            <h2>Choose Your Impact</h2>
+            
+            <div class="form-group">
+                <label class="form-label">Donation Amount</label>
+                <div class="amount-grid">
+                    <button class="amount-btn" data-donation-amount="25" onclick="selectAmount(25)">$25</button>
+                    <button class="amount-btn" data-donation-amount="50" onclick="selectAmount(50)">$50</button>
+                    <button class="amount-btn" data-donation-amount="100" onclick="selectAmount(100)">$100</button>
+                    <button class="amount-btn selected" data-donation-amount="250" onclick="selectAmount(250)">$250</button>
+                    <button class="amount-btn" data-donation-amount="500" onclick="selectAmount(500)">$500</button>
+                    <button class="amount-btn" data-donation-amount="1000" onclick="selectAmount(1000)">$1,000</button>
+                </div>
+                <input type="number" class="form-input" id="customAmount" placeholder="Custom amount" min="1" oninput="selectCustomAmount(this.value)">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Frequency</label>
+                <div class="frequency-toggle">
+                    <button class="frequency-btn active" onclick="setFrequency('one_time')">One Time</button>
+                    <button class="frequency-btn" onclick="setFrequency('monthly')">Monthly</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Your Information</label>
+                <input type="text" class="form-input" id="firstName" placeholder="First Name" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-input" id="lastName" placeholder="Last Name" required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" class="form-input" id="email" placeholder="Email Address" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Card Information</label>
+                <div id="card-element" style="padding: 16px; border: 2px solid var(--nav-border); border-radius: 12px; background: var(--nav-bg);"></div>
+                <div id="card-errors" style="color: #ff6b6b; font-size: 14px; margin-top: 8px;"></div>
+            </div>
+
+            <button class="donate-btn" onclick="processDonation()" id="donateBtn">
+                Complete Donation
+            </button>
+
+            <p style="text-align: center; font-size: 0.875rem; color: var(--nav-text); margin-top: 16px;">
+                🔒 Secure & tax-deductible • EIN: 33-4214907
+            </p>
+        </div>
+    </div>
+</div>
+</main>
+
+<!-- Footer will be loaded here -->
+<div id="footer-container"></div>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+const body=document.body;
+
+// Theme initialization based on page
+const lightModePages=['programs','donate','home'];
+function initTheme(){
+const path=location.pathname;
+let theme='light';
+lightModePages.forEach(p=>{if(path.includes(p)||path==='/')theme='light'});
+document.documentElement.setAttribute('data-theme',theme);
+body.setAttribute('data-theme',theme);
+}
+initTheme();
+
+const nav=$('#nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',pageYOffset>50),{passive:!0});
+
+const burger=$('#burger'),menu=$('#mobileMenu');
+burger.addEventListener('click',()=>{
+const open=burger.classList.contains('open');
+burger.classList.toggle('open');
+burger.setAttribute('aria-expanded',!open);
+menu.classList.toggle('open');
+body.classList.toggle('modal-open',!open);
+});
+
+$$('.mobile-link,.mobile-donate').forEach(l=>l.addEventListener('click',()=>{
+burger.classList.remove('open');
+burger.setAttribute('aria-expanded','false');
+menu.classList.remove('open');
+body.classList.remove('modal-open');
+}));
+
+function setActive(){
+const path=location.pathname;
+$$('.nav-link,.mobile-link').forEach(l=>{
+l.classList.remove('active');
+l.removeAttribute('aria-current');
+const href=l.getAttribute('href');
+if(href===path||(path==='/'&&href==='/')){
+l.classList.add('active');
+l.setAttribute('aria-current','page');
+}
+});
+}
+
+addEventListener('DOMContentLoaded',()=>{setActive();initTheme()});
+addEventListener('popstate',()=>{setActive();initTheme()});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.classList.contains('open'))burger.click()});
+
+// Load footer
+fetch('/footer.html')
+.then(response => response.text())
+.then(html => {
+document.getElementById('footer-container').innerHTML = html;
+})
+.catch(error => console.log('Footer not found, continuing without it'));
+
+// Donation functionality
+let stripe, elements, card;
+let selectedAmount = 250;
+let frequency = 'one_time';
+
+// Initialize Stripe
+if (typeof Stripe !== 'undefined') {
+    stripe = Stripe('pk_live_51S4R0SRW56Pm3uYI8EKbysm1ok4peVXSD6G17HtFy8BDuG9Carn8Ry7iPVzulMBtdEFcz5pFvXpE04CIgn8PY6WS00aXOqMYEI');
+    elements = stripe.elements();
+    card = elements.create('card', {
+        style: {
+            base: {
+                fontSize: '16px',
+                color: '#0C2D31',
+                fontFamily: 'Inter, sans-serif',
+                '::placeholder': {
+                    color: '#9CA3AF'
+                }
+            }
+        }
+    });
+    card.mount('#card-element');
+    
+    card.on('change', (event) => {
+        const displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+}
+
+// Donation functions
+window.selectAmount = (amount) => {
+    selectedAmount = amount;
+    document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('selected'));
+    event.target.classList.add('selected');
+    document.getElementById('customAmount').value = '';
+    
+    // Track donation amount selection
+    if (window.meauxbilityAnalytics) {
+        window.meauxbilityAnalytics.trackDonation({
+            amount: amount,
+            event_category: 'donation_interaction'
+        });
+    }
+};
+
+window.selectCustomAmount = (value) => {
+    if (value && value > 0) {
+        selectedAmount = parseFloat(value);
+        document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('selected'));
+    }
+};
+
+window.setFrequency = (freq) => {
+    frequency = freq;
+    document.querySelectorAll('.frequency-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Track frequency selection
+    if (window.meauxbilityAnalytics) {
+        window.meauxbilityAnalytics.trackEvent('donation_frequency_selected', {
+            frequency: freq,
+            event_category: 'donation_interaction'
+        });
+    }
+};
+
+window.processDonation = async () => {
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    
+    if (!firstName || !lastName || !email) {
+        alert('Please fill in all required fields');
+        return;
+    }
+    
+    const donateBtn = document.getElementById('donateBtn');
+    donateBtn.disabled = true;
+    donateBtn.textContent = 'Processing...';
+    
+    try {
+        // Track donation attempt
+        if (window.meauxbilityAnalytics) {
+            window.meauxbilityAnalytics.trackDonation({
+                amount: selectedAmount,
+                frequency: frequency,
+                event_category: 'donation_attempt'
+            });
+        }
+        
+        // Create payment intent
+        const response = await fetch('/api/donations/create-payment-intent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: selectedAmount * 100, // Convert to cents
+                currency: 'usd',
+                frequency: frequency,
+                metadata: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email
+                }
+            })
+        });
+        
+        const { clientSecret } = await response.json();
+        
+        // Confirm payment
+        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: card,
+                billing_details: {
+                    name: `${firstName} ${lastName}`,
+                    email: email
+                }
+            }
+        });
+        
+        if (error) {
+            throw new Error(error.message);
+        }
+        
+        if (paymentIntent.status === 'succeeded') {
+            // Track successful donation
+            if (window.meauxbilityAnalytics) {
+                window.meauxbilityAnalytics.trackDonation({
+                    amount: selectedAmount,
+                    frequency: frequency,
+                    event_category: 'donation_completed',
+                    value: selectedAmount
+                });
+            }
+            
+            alert('Thank you for your donation! Your support makes a real difference.');
+            // Reset form
+            document.getElementById('donation-form').reset();
+            document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelector('.amount-btn[data-donation-amount="250"]').classList.add('selected');
+            selectedAmount = 250;
+        }
+    } catch (error) {
+        alert(`Payment failed: ${error.message}`);
+    } finally {
+        donateBtn.disabled = false;
+        donateBtn.textContent = 'Complete Donation';
+    }
+};
+
+})();
+</script>
+</body>
+</html>

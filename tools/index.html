@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Meauxbility Tools</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/glassmorphic.css">
+<style>
+body{background:var(--bg-gradient-1);min-height:100vh}
+.tools-container{max-width:1200px;margin:4rem auto;padding:2rem}
+.tools-header{text-align:center;margin-bottom:3rem}
+.tools-header h1{color:var(--text-primary);font-size:3rem;margin-bottom:1rem}
+.tools-header p{color:var(--text-secondary);font-size:1.25rem}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.tool-card{background:var(--glass-bg);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:2rem;transition:all 0.3s;text-decoration:none;color:var(--text-primary);display:block}
+.tool-card:hover{transform:translateY(-5px);box-shadow:var(--glass-shadow)}
+.tool-icon{font-size:3rem;margin-bottom:1rem;text-align:center}
+.tool-title{font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;text-align:center}
+.tool-desc{color:var(--text-secondary);text-align:center;line-height:1.6}
+</style>
+</head>
+<body>
+<nav class="nav-glass">
+<div class="nav-container">
+<a href="../index.html" class="logo">MEAUXBILITY</a>
+<ul class="nav-menu">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../apply.html">Apply</a></li>
+<li><a href="../donate.html">Donate</a></li>
+<li><a href="index.html">Tools</a></li>
+</ul>
+</div>
+</nav>
+
+<div class="tools-container">
+<div class="tools-header">
+<h1>Meauxbility Tools</h1>
+<p>Powerful tools for content management and optimization</p>
+</div>
+<div class="tools-grid">
+<a href="drop-and-go.html" class="tool-card">
+<div class="tool-icon">📁</div>
+<div class="tool-title">Drop & Go</div>
+<div class="tool-desc">Upload and optimize content instantly. Drag & drop files and watch them get automatically optimized and stored.</div>
+</a>
+<a href="agent-command-center.html" class="tool-card">
+<div class="tool-icon">⚡</div>
+<div class="tool-title">Command Center</div>
+<div class="tool-desc">Admin dashboard with 10-tier agent system for managing all aspects of Meauxbility operations.</div>
+</a>
+<a href="content-manager.html" class="tool-card">
+<div class="tool-icon">🎨</div>
+<div class="tool-title">Content Manager</div>
+<div class="tool-desc">AI-powered asset management with Google Cloud integration. Organize, optimize, and track all your content.</div>
+</a>
+</div>
+</div>
+</body>
+</html>
