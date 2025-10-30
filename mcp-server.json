@@ -1,0 +1,155 @@
+{
+  "mcpServers": {
+    "spartans-command-center": {
+      "command": "node",
+      "args": ["server.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_MODE": "true"
+      },
+      "description": "Spartans Command Center - Full Stack Automation Hub",
+      "capabilities": {
+        "tools": [
+          {
+            "name": "deploy-application",
+            "description": "Deploy the full application stack to all configured platforms",
+            "input": {
+              "type": "object",
+              "properties": {
+                "environment": {
+                  "type": "string",
+                  "enum": ["development", "staging", "production"],
+                  "description": "Target deployment environment"
+                },
+                "platforms": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["github-pages", "render", "vercel", "local"]
+                  },
+                  "description": "Target deployment platforms"
+                }
+              }
+            }
+          },
+          {
+            "name": "health-check",
+            "description": "Check health status of all services",
+            "input": {
+              "type": "object",
+              "properties": {
+                "service": {
+                  "type": "string",
+                  "enum": ["all", "web", "api", "database", "storage"],
+                  "description": "Service to check"
+                }
+              }
+            }
+          },
+          {
+            "name": "setup-google-workspace",
+            "description": "Configure Google Workspace integration (Gmail, Calendar, Meet, Drive)",
+            "input": {
+              "type": "object",
+              "properties": {
+                "services": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["gmail", "calendar", "meet", "drive"]
+                  },
+                  "description": "Google services to configure"
+                }
+              }
+            }
+          },
+          {
+            "name": "optimize-cloud-storage",
+            "description": "Optimize Google Cloud Storage buckets and resources",
+            "input": {
+              "type": "object",
+              "properties": {
+                "bucket": {
+                  "type": "string",
+                  "description": "Bucket name to optimize"
+                },
+                "actions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["cleanup", "compress", "archive", "analyze"]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "monitor-deployment",
+            "description": "Monitor deployment status and health across all platforms",
+            "input": {
+              "type": "object",
+              "properties": {
+                "platform": {
+                  "type": "string",
+                  "enum": ["all", "github", "render", "vercel"],
+                  "description": "Platform to monitor"
+                }
+              }
+            }
+          }
+        ],
+        "resources": [
+          {
+            "uri": "spartans://api/health",
+            "name": "API Health Status",
+            "description": "Current health status of the API",
+            "mimeType": "application/json"
+          },
+          {
+            "uri": "spartans://deployment/status",
+            "name": "Deployment Status",
+            "description": "Current deployment status across all platforms",
+            "mimeType": "application/json"
+          },
+          {
+            "uri": "spartans://services/google-workspace",
+            "name": "Google Workspace Status",
+            "description": "Status of Google Workspace integrations",
+            "mimeType": "application/json"
+          },
+          {
+            "uri": "spartans://storage/cloud",
+            "name": "Cloud Storage Metrics",
+            "description": "Google Cloud Storage usage and metrics",
+            "mimeType": "application/json"
+          }
+        ],
+        "prompts": [
+          {
+            "name": "deploy-full-stack",
+            "description": "Deploy the complete application stack",
+            "arguments": [
+              {
+                "name": "environment",
+                "description": "Target environment",
+                "required": true
+              }
+            ]
+          },
+          {
+            "name": "system-diagnostics",
+            "description": "Run comprehensive system diagnostics",
+            "arguments": []
+          }
+        ]
+      },
+      "metadata": {
+        "version": "1.0.0",
+        "author": "Meauxbility Team",
+        "repository": "https://github.com/InnerAnimal/spartans_command_center",
+        "license": "MIT",
+        "tags": ["automation", "deployment", "google-workspace", "cloud", "web-app"]
+      }
+    }
+  }
+}
