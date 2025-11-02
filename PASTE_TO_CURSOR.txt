@@ -1,0 +1,110 @@
+🤖 CURSOR AI - READ THIS BRIEFING & EXECUTE
+
+I need you to be my deployment and frontend build agent. Claude (another AI) has set up all the backend infrastructure. Now I need YOU to handle the Vercel deployments and page building.
+
+📋 FULL BRIEFING: Read `CURSOR_AI_BRIEFING.md` in this repo
+
+🎯 YOUR IMMEDIATE TASKS:
+
+1. **AUDIT ALL VERCEL PROJECTS**
+   Use Vercel token: rtPMwvDK44vh2zMWQlxT0T2V
+   Team: team_eMhajA4eD6XUAGomNi6CnQeZ
+
+   Report on ALL 4 projects:
+   - InnerAnimalMedia (inneranimalmedia.com)
+   - Meauxbility.org (meauxbility.org)
+   - iAutodidact (iautodidact.app)
+   - InnerAnimal Shop (inneranimal.app)
+
+   For each project, tell me:
+   - Production URL (actual live URL)
+   - Preview URL
+   - Deployment status
+   - Last deploy date
+   - Connected GitHub repo
+   - All deployed pages (which return 200, which return 404)
+
+2. **IDENTIFY MISSING PAGES**
+   For spartans_command_center project, these return 404:
+   - /register
+   - /about
+   - /contact
+
+   List any other 404s you find across all projects.
+
+3. **BUILD THE MISSING PAGES**
+   Create these 3 pages using our neumorphic design:
+   - app/register/page.tsx (signup form, styled like /login)
+   - app/about/page.tsx (company info page)
+   - app/contact/page.tsx (contact form with Resend)
+
+   Reference existing pages for styling:
+   - app/login/page.tsx (form styling)
+   - app/page.tsx (layout and neumorphic design)
+   - app/globals.css (design system classes)
+
+4. **SYNC ENVIRONMENT VARIABLES**
+   Compare .env.local with Vercel environment variables.
+   Report which variables are missing in Vercel dashboard.
+   Add them via Vercel UI or API.
+
+5. **DEPLOY TO PRODUCTION**
+   Deploy spartans_command_center with new pages.
+   Report deployment URL and status.
+
+📊 REPORT FORMAT:
+
+```markdown
+## VERCEL AUDIT RESULTS
+
+### All Projects Found:
+1. Project Name - Production URL - Status
+2. Project Name - Production URL - Status
+...
+
+### spartans_command_center Status:
+- Production URL: [URL]
+- Pages Working: [list]
+- Pages Missing (404): [list]
+- Environment Variables: [configured/missing]
+
+### Actions Taken:
+- ✅ Created /register page
+- ✅ Created /about page
+- ✅ Created /contact page
+- ✅ Deployed to production
+- ⚠️ Missing env vars: [list]
+
+### Blockers:
+- [Anything you need help with]
+```
+
+🎨 DESIGN GUIDE:
+- Use .btn-neu for buttons
+- Use .card-neu for cards
+- Use .input-neu for inputs
+- Use bg-hero-gradient for page backgrounds
+- Follow the pattern in existing pages
+
+🔑 ALL CREDENTIALS:
+See MASTER_VAULT_PUBLIC.md for:
+- Supabase credentials
+- Cloudflare API token
+- Resend API key
+- Stripe keys
+- Database configuration
+
+📁 KEY FILES TO READ:
+1. CURSOR_AI_BRIEFING.md - Full instructions
+2. MASTER_VAULT_PUBLIC.md - All credentials & config
+3. BRAND_IDENTITY.md - Design system
+4. .env.local - Environment variables (don't commit!)
+
+🤝 WORKFLOW:
+- YOU: Handle builds, deployments, frontend pages
+- CLAUDE: Handle database, backend APIs, SQL
+- TOGETHER: Test and deploy features
+
+---
+
+START NOW: Run the Vercel audit and report all 4 projects + their URLs!
