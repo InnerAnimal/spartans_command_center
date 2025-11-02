@@ -1,44 +1,11 @@
 import Link from "next/link";
+import Navigation from "@/components/layout/Navigation";
 import { MessageSquare, Users, Video, Bot, Sparkles } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-hero-gradient">
-      {/* Navigation */}
-      <nav className="border-b border-charcoal-lighter backdrop-blur-sm sticky top-0 z-50" style={{
-        background: 'linear-gradient(180deg, rgba(34, 37, 43, 0.95), rgba(26, 29, 35, 0.9))',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)'
-      }}>
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-neu-emboss-sm bg-gradient-teal">
-                <Sparkles className="h-5 w-5 text-charcoal-deep" />
-              </div>
-              <span className="text-xl font-bold text-brand-teal-light">
-                InnerAnimalMedia
-              </span>
-            </div>
-            <div className="flex items-center gap-6">
-              <Link href="/ai-chat" className="text-sm font-medium text-muted-foreground hover:text-brand-teal transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(95,156,158,0.5)]">
-                AI Chat
-              </Link>
-              <Link href="/community" className="text-sm font-medium text-muted-foreground hover:text-brand-teal transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(95,156,158,0.5)]">
-                Community
-              </Link>
-              <Link href="/video" className="text-sm font-medium text-muted-foreground hover:text-brand-teal transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(95,156,158,0.5)]">
-                Video
-              </Link>
-              <Link 
-                href="/login" 
-                className="btn-neu text-sm"
-              >
-                Get Started
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 pt-20 pb-16">

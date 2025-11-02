@@ -1,16 +1,14 @@
 import Link from "next/link";
-import { Sparkles, ArrowLeft } from "lucide-react";
+import Navigation from "@/components/layout/Navigation";
+import { Sparkles } from "lucide-react";
 
 export default function Login() {
   return (
-    <div className="min-h-screen bg-hero-gradient flex items-center justify-center">
+    <div className="min-h-screen bg-hero-gradient">
+      <Navigation />
+      
+      <div className="flex items-center justify-center py-16">
       <div className="w-full max-w-md px-4">
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 text-sm font-medium text-brand-teal hover:text-brand-teal-light mb-4 transition-colors">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Home
-          </Link>
-        </div>
 
         <div className="card-neu p-8">
           <div className="flex items-center justify-center gap-3 mb-6">
@@ -58,6 +56,7 @@ export default function Login() {
             🚧 Authentication coming soon
           </p>
         </div>
+      </div>
       </div>
     </div>
   );
