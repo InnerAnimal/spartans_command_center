@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkles } from "lucide-react";
+import PlayLogo from "./PlayLogo";
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -20,9 +20,7 @@ export default function Navigation() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-neu-emboss-sm bg-gradient-teal">
-              <Sparkles className="h-5 w-5 text-charcoal-deep" />
-            </div>
+            <PlayLogo className="w-10 h-10" />
             <span className="text-xl font-bold text-brand-teal-light">
               InnerAnimalMedia
             </span>
