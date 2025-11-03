@@ -28,40 +28,50 @@ export default function Navigation() {
           
           <div className="flex items-center gap-6">
             <Link 
-              href="/ai-chat" 
+              href="/services" 
               className={`text-sm font-medium transition-all duration-300 ${
-                isActive('/ai-chat') 
+                isActive('/services') 
                   ? 'text-brand-teal drop-shadow-[0_0_8px_rgba(95,156,158,0.6)]' 
                   : 'text-muted-foreground hover:text-brand-teal hover:drop-shadow-[0_0_8px_rgba(95,156,158,0.5)]'
               }`}
             >
-              AI Chat
+              Services
             </Link>
             <Link 
-              href="/community" 
+              href="/portfolio" 
               className={`text-sm font-medium transition-all duration-300 ${
-                isActive('/community') 
+                isActive('/portfolio') 
                   ? 'text-brand-teal drop-shadow-[0_0_8px_rgba(95,156,158,0.6)]' 
                   : 'text-muted-foreground hover:text-brand-teal hover:drop-shadow-[0_0_8px_rgba(95,156,158,0.5)]'
               }`}
             >
-              Community
+              Portfolio
             </Link>
             <Link 
-              href="/video" 
+              href="/about" 
               className={`text-sm font-medium transition-all duration-300 ${
-                isActive('/video') 
+                isActive('/about') 
                   ? 'text-brand-teal drop-shadow-[0_0_8px_rgba(95,156,158,0.6)]' 
                   : 'text-muted-foreground hover:text-brand-teal hover:drop-shadow-[0_0_8px_rgba(95,156,158,0.5)]'
               }`}
             >
-              Video
+              About
             </Link>
             <Link 
-              href="/login" 
+              href="/blog" 
+              className={`text-sm font-medium transition-all duration-300 ${
+                isActive('/blog') 
+                  ? 'text-brand-teal drop-shadow-[0_0_8px_rgba(95,156,158,0.6)]' 
+                  : 'text-muted-foreground hover:text-brand-teal hover:drop-shadow-[0_0_8px_rgba(95,156,158,0.5)]'
+              }`}
+            >
+              Blog
+            </Link>
+            <Link 
+              href="/contact" 
               className="btn-neu text-sm"
             >
-              Get Started
+              Contact
             </Link>
           </div>
         </div>
