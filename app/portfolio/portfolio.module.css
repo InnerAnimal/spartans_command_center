@@ -1,0 +1,73 @@
+/* =====================================================
+   Portfolio Page Styles - Glassmorphic Dark UI
+   ===================================================== */
+
+:root {
+  --bg: #0b0c0f;
+  --card: #13161c;
+  --text: #f5f7fa;
+  --muted: #aab2c0;
+  --accent: #b5ff5c;
+  --accent-2: #6ce0ff;
+  --ring: rgba(108, 224, 255, 0.65);
+  --radius: 20px;
+  --space: clamp(14px, 1.8vw, 22px);
+  --maxw: 1240px;
+  --shadow: 0 14px 44px rgba(0, 0, 0, 0.38);
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(1400px 900px at 70% -20%, rgba(108, 224, 255, 0.09), transparent 60%),
+    radial-gradient(1200px 800px at -10% 10%, rgba(181, 255, 92, 0.07), transparent 60%),
+    radial-gradient(800px 600px at 50% -30%, rgba(255, 255, 255, 0.05), transparent 60%),
+    var(--bg);
+  color: var(--text);
+  letter-spacing: 0.2px;
+}
+
+.portfolioSection {
+  width: min(100%, var(--maxw));
+  margin-inline: auto;
+  padding-inline: var(--space);
+  margin-top: 12px;
+  margin-bottom: 70px;
+}
+
+.loading,
+.error,
+.empty {
+  text-align: center;
+  padding: 60px var(--space);
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.empty {
+  display: none;
+}
+
+.empty:only-child {
+  display: block;
+}
+
+/* Focus outlines */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+

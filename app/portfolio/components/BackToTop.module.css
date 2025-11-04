@@ -1,0 +1,31 @@
+.toTop {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  color: var(--text, #f5f7fa);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow, 0 14px 44px rgba(0, 0, 0, 0.38));
+  transition: opacity 0.2s ease, transform 0.08s ease;
+  z-index: 30;
+}
+
+.toTop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toTop:active {
+  transform: translateY(1px);
+}
+
