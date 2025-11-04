@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inner Animal Media - Creative Media Production</title>
+    <meta name="description" content="Inner Animal Media - Full-service creative media production company">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Inner Animal Media</h1>
+        <p class="subtitle">Creative Media Production & Digital Excellence</p>
+
+        <div class="badge">🚀 Coming Soon - Powered by Spartans Command Center</div>
+
+        <div class="features">
+            <div class="feature">
+                <h3>📹 Video Production</h3>
+                <p>Professional video content creation</p>
+            </div>
+            <div class="feature">
+                <h3>🎨 Creative Design</h3>
+                <p>Stunning visual experiences</p>
+            </div>
+            <div class="feature">
+                <h3>🌐 Digital Media</h3>
+                <p>Full-service digital solutions</p>
+            </div>
+            <div class="feature">
+                <h3>🤖 AI-Powered</h3>
+                <p>Cutting-edge automation</p>
+            </div>
+        </div>
+
+        <p style="margin-top: 3rem; opacity: 0.7; font-size: 0.9rem;">
+            Deployed via Vercel • Automated with MCP AI Control
+        </p>
+    </div>
+</body>
+</html>

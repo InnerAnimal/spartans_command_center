@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spartans Command Center - Elite Development Solutions</title>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="mbx-nav">
+        <div class="mbx-nav-container">
+            <a href="/" class="mbx-nav-logo">
+                <div class="mbx-logo-icon">⚡</div>
+                <span class="mbx-logo-text">Spartans Command Center</span>
+            </a>
+            
+            <div class="mbx-nav-menu">
+                <a href="/" class="mbx-nav-link">Home</a>
+                <a href="/about" class="mbx-nav-link">About</a>
+                <a href="/services" class="mbx-nav-link">Services</a>
+                <a href="/portfolio" class="mbx-nav-link">Portfolio</a>
+                <a href="/team" class="mbx-nav-link">Team</a>
+                <a href="/contact" class="mbx-nav-link">Contact</a>
+                <a href="/admin" class="mbx-nav-link admin-link">Command Center</a>
+            </div>
+            
+            <button class="mbx-nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="mbx-hero">
+        <div class="mbx-hero-container">
+            <div class="mbx-hero-content">
+                <h1 class="mbx-hero-title">
+                    Elite Development <span class="mbx-gradient-text">Solutions</span>
+                </h1>
+                <p class="mbx-hero-subtitle">
+                    Spartans Command Center delivers cutting-edge web development, 
+                    AI integration, and digital transformation services for forward-thinking organizations.
+                </p>
+                <div class="mbx-hero-actions">
+                    <button class="mbx-btn mbx-btn-primary" onclick="scrollToSection('services')">
+                        Explore Services
+                    </button>
+                    <button class="mbx-btn mbx-btn-outline" onclick="scrollToSection('portfolio')">
+                        View Portfolio
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 3D Model Integration -->
+            <div class="mbx-3d-accent">
+                <model-viewer 
+                    src="/assets/models/spartans-logo.glb" 
+                    alt="Spartans Command Center Logo"
+                    auto-rotate
+                    camera-controls
+                    style="width: 100%; height: 400px;">
+                </model-viewer>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="mbx-services">
+        <div class="mbx-container">
+            <h2 class="mbx-section-title">Our Services</h2>
+            <div class="mbx-services-grid">
+                <div class="mbx-service-card">
+                    <div class="mbx-service-icon">🌐</div>
+                    <h3>Web Development</h3>
+                    <p>Custom web applications, e-commerce solutions, and responsive websites built with modern technologies.</p>
+                    <ul>
+                        <li>React/Next.js Applications</li>
+                        <li>Node.js Backend Systems</li>
+                        <li>Database Design & Integration</li>
+                        <li>API Development</li>
+                    </ul>
+                </div>
+                
+                <div class="mbx-service-card">
+                    <div class="mbx-service-icon">🤖</div>
+                    <h3>AI Integration</h3>
+                    <p>Intelligent automation, machine learning solutions, and AI-powered features for your applications.</p>
+                    <ul>
+                        <li>ChatGPT/Claude Integration</li>
+                        <li>Custom AI Workflows</li>
+                        <li>Machine Learning Models</li>
+                        <li>Intelligent Automation</li>
+                    </ul>
+                </div>
+                
+                <div class="mbx-service-card">
+                    <div class="mbx-service-icon">☁️</div>
+                    <h3>Cloud Solutions</h3>
+                    <p>Scalable cloud infrastructure, deployment automation, and modern DevOps practices.</p>
+                    <ul>
+                        <li>AWS/Google Cloud Setup</li>
+                        <li>Docker & Kubernetes</li>
+                        <li>CI/CD Pipelines</li>
+                        <li>Monitoring & Analytics</li>
+                    </ul>
+                </div>
+                
+                <div class="mbx-service-card">
+                    <div class="mbx-service-icon">💳</div>
+                    <h3>Payment Integration</h3>
+                    <p>Secure payment processing, subscription management, and financial system integration.</p>
+                    <ul>
+                        <li>Stripe Integration</li>
+                        <li>PayPal & Square</li>
+                        <li>Subscription Management</li>
+                        <li>Financial Reporting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="mbx-portfolio">
+        <div class="mbx-container">
+            <h2 class="mbx-section-title">Featured Projects</h2>
+            <div class="mbx-portfolio-grid">
+                <div class="mbx-portfolio-item">
+                    <div class="mbx-portfolio-image">
+                        <img src="/assets/images/portfolio/meauxbility.jpg" alt="Meauxbility Project">
+                    </div>
+                    <div class="mbx-portfolio-content">
+                        <h3>Meauxbility Platform</h3>
+                        <p>Complete nonprofit platform with donation processing, grant management, and community features.</p>
+                        <div class="mbx-portfolio-tech">
+                            <span class="mbx-tech-tag">Node.js</span>
+                            <span class="mbx-tech-tag">Supabase</span>
+                            <span class="mbx-tech-tag">Stripe</span>
+                            <span class="mbx-tech-tag">React</span>
+                        </div>
+                        <a href="https://meauxbility.org" class="mbx-portfolio-link" target="_blank">View Project</a>
+                    </div>
+                </div>
+                
+                <div class="mbx-portfolio-item">
+                    <div class="mbx-portfolio-image">
+                        <img src="/assets/images/portfolio/admin-dashboard.jpg" alt="Admin Dashboard">
+                    </div>
+                    <div class="mbx-portfolio-content">
+                        <h3>Command Center Dashboard</h3>
+                        <p>Comprehensive admin dashboard with real-time analytics, user management, and system monitoring.</p>
+                        <div class="mbx-portfolio-tech">
+                            <span class="mbx-tech-tag">JavaScript</span>
+                            <span class="mbx-tech-tag">GitHub API</span>
+                            <span class="mbx-tech-tag">Charts.js</span>
+                            <span class="mbx-tech-tag">WebSockets</span>
+                        </div>
+                        <a href="/admin" class="mbx-portfolio-link">View Dashboard</a>
+                    </div>
+                </div>
+                
+                <div class="mbx-portfolio-item">
+                    <div class="mbx-portfolio-image">
+                        <img src="/assets/images/portfolio/ai-integration.jpg" alt="AI Integration">
+                    </div>
+                    <div class="mbx-portfolio-content">
+                        <h3>AI-Powered Workflows</h3>
+                        <p>Intelligent automation systems integrating multiple AI services for enhanced productivity.</p>
+                        <div class="mbx-portfolio-tech">
+                            <span class="mbx-tech-tag">OpenAI</span>
+                            <span class="mbx-tech-tag">Claude</span>
+                            <span class="mbx-tech-tag">Python</span>
+                            <span class="mbx-tech-tag">FastAPI</span>
+                        </div>
+                        <a href="/services" class="mbx-portfolio-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="mbx-team">
+        <div class="mbx-container">
+            <h2 class="mbx-section-title">Elite Team</h2>
+            <div class="mbx-team-grid">
+                <div class="mbx-team-member">
+                    <div class="mbx-member-avatar">
+                        <img src="/assets/images/team/commander.jpg" alt="Commander">
+                    </div>
+                    <h3>Commander</h3>
+                    <p class="mbx-member-role">Lead Developer & Architect</p>
+                    <p class="mbx-member-bio">Full-stack developer with expertise in modern web technologies and AI integration.</p>
+                    <div class="mbx-member-social">
+                        <a href="#" class="mbx-social-link">GitHub</a>
+                        <a href="#" class="mbx-social-link">LinkedIn</a>
+                    </div>
+                </div>
+                
+                <div class="mbx-team-member">
+                    <div class="mbx-member-avatar">
+                        <img src="/assets/images/team/developer.jpg" alt="Developer">
+                    </div>
+                    <h3>Developer</h3>
+                    <p class="mbx-member-role">Frontend Specialist</p>
+                    <p class="mbx-member-bio">UI/UX expert focused on creating exceptional user experiences and responsive designs.</p>
+                    <div class="mbx-member-social">
+                        <a href="#" class="mbx-social-link">GitHub</a>
+                        <a href="#" class="mbx-social-link">Dribbble</a>
+                    </div>
+                </div>
+                
+                <div class="mbx-team-member">
+                    <div class="mbx-member-avatar">
+                        <img src="/assets/images/team/ai-specialist.jpg" alt="AI Specialist">
+                    </div>
+                    <h3>AI Specialist</h3>
+                    <p class="mbx-member-role">Machine Learning Engineer</p>
+                    <p class="mbx-member-bio">AI integration specialist with deep knowledge of modern language models and automation.</p>
+                    <div class="mbx-member-social">
+                        <a href="#" class="mbx-social-link">GitHub</a>
+                        <a href="#" class="mbx-social-link">Kaggle</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="mbx-cta">
+        <div class="mbx-container">
+            <div class="mbx-cta-content">
+                <h2>Ready to Transform Your Digital Presence?</h2>
+                <p>Let's discuss your project and create something extraordinary together.</p>
+                <div class="mbx-cta-actions">
+                    <button class="mbx-btn mbx-btn-primary" onclick="scrollToSection('contact')">
+                        Start Your Project
+                    </button>
+                    <button class="mbx-btn mbx-btn-outline" onclick="openDonateModal()">
+                        Support Our Mission
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mbx-footer">
+        <div class="mbx-footer-container">
+            <div class="mbx-footer-content">
+                <div class="mbx-footer-section">
+                    <h3>Spartans Command Center</h3>
+                    <p>Elite development solutions for the modern digital world.</p>
+                    <div class="mbx-footer-social">
+                        <a href="#" class="mbx-social-link">GitHub</a>
+                        <a href="#" class="mbx-social-link">LinkedIn</a>
+                        <a href="#" class="mbx-social-link">Twitter</a>
+                    </div>
+                </div>
+                
+                <div class="mbx-footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="/services">Web Development</a></li>
+                        <li><a href="/services">AI Integration</a></li>
+                        <li><a href="/services">Cloud Solutions</a></li>
+                        <li><a href="/services">Payment Systems</a></li>
+                    </ul>
+                </div>
+                
+                <div class="mbx-footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/team">Our Team</a></li>
+                        <li><a href="/portfolio">Portfolio</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="mbx-footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/docs">Documentation</a></li>
+                        <li><a href="/support">Support</a></li>
+                        <li><a href="/admin">Command Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mbx-footer-bottom">
+                <p>&copy; <span id="mbx-year">2025</span> Spartans Command Center. All rights reserved.</p>
+                <div class="mbx-footer-links">
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Donation Modal (using your existing system) -->
+    <div id="mbxModalBackdrop" class="mbx-modal-backdrop" aria-hidden="true">
+        <div class="mbx-modal-content">
+            <div class="mbx-modal-header">
+                <h2>Support Spartans Command Center</h2>
+                <button class="mbx-modal-close" onclick="closeDonateModal()">×</button>
+            </div>
+            
+            <div class="mbx-donation-form">
+                <div class="mbx-amount-selection">
+                    <h3 class="mbx-option-title">Select Amount</h3>
+                    <div class="mbx-amount-buttons">
+                        <button class="mbx-amount-btn" onclick="selectMbxAmount(50)">$50</button>
+                        <button class="mbx-amount-btn" onclick="selectMbxAmount(100)">$100</button>
+                        <button class="mbx-amount-btn" onclick="selectMbxAmount(250)">$250</button>
+                        <button class="mbx-amount-btn" onclick="selectMbxAmount(500)">$500</button>
+                    </div>
+                    <div class="mbx-custom-amount">
+                        <input type="number" placeholder="Custom amount" onchange="selectMbxCustom(this.value)">
+                    </div>
+                </div>
+                
+                <div class="mbx-donor-info">
+                    <h3 class="mbx-option-title">Your Information</h3>
+                    <div class="mbx-name-grid">
+                        <div class="mbx-form-group">
+                            <label>First Name</label>
+                            <input type="text" class="mbx-form-input" id="mbxFirstName" required>
+                            <div class="mbx-error" id="mbxFirstNameErr">Required</div>
+                        </div>
+                        <div class="mbx-form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="mbx-form-input" id="mbxLastName" required>
+                            <div class="mbx-error" id="mbxLastNameErr">Required</div>
+                        </div>
+                    </div>
+                    <div class="mbx-form-group">
+                        <label>Email</label>
+                        <input type="email" class="mbx-form-input" id="mbxEmail" required>
+                        <div class="mbx-error" id="mbxEmailErr">Valid email required</div>
+                    </div>
+                    <div class="mbx-form-group">
+                        <label>Card Information</label>
+                        <div id="mbx-card-element"></div>
+                        <div class="mbx-error" id="mbxCardErr"></div>
+                    </div>
+                    <button class="mbx-donate-submit" onclick="processMbxDonation()">
+                        <span class="mbx-submit-text">Complete Donation</span>
+                        <div class="mbx-loading" id="mbxLoading">
+                            <div class="mbx-spinner"></div>
+                            <span>Processing...</span>
+                        </div>
+                    </button>
+                    <div class="mbx-security-note">
+                        🔒 Secure & tax-deductible • Supporting elite development
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="mbxSuccessMsg" class="mbx-success-message">
+        <div class="mbx-success-content">
+            <div class="mbx-success-icon">✅</div>
+            <h3>Thank You!</h3>
+            <p>Your support helps us continue delivering elite development solutions.</p>
+        </div>
+    </div>
+
+    <script>
+        // Include your existing JavaScript with modifications for Spartans Command Center
+        (function() {
+            'use strict';
+
+            // Theme Management
+            const darkModePages = ['about', 'team', 'contact'];
+            const lightModePages = ['services', 'portfolio', 'home'];
+
+            function initializeTheme() {
+                const currentPath = window.location.pathname;
+                const savedTheme = localStorage.getItem('spartans-theme');
+                let pageTheme = null;
+
+                darkModePages.forEach(page => {
+                    if (currentPath.includes(page)) pageTheme = 'dark';
+                });
+
+                lightModePages.forEach(page => {
+                    if (currentPath.includes(page) || currentPath === '/') pageTheme = 'light';
+                });
+
+                const html = document.documentElement;
+                if (savedTheme) {
+                    html.setAttribute('data-theme', savedTheme);
+                } else if (pageTheme) {
+                    html.setAttribute('data-theme', pageTheme);
+                }
+            }
+
+            // Smooth scrolling
+            function scrollToSection(sectionId) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            // Mobile navigation
+            document.getElementById('navToggle').addEventListener('click', function() {
+                document.querySelector('.mbx-nav-menu').classList.toggle('active');
+            });
+
+            // Payment Controller (adapted from your existing code)
+            class SpartansPaymentController {
+                constructor() {
+                    this.amount = 100;
+                    this.stripe = null;
+                    this.elements = null;
+                    this.card = null;
+                    this.init();
+                }
+
+                async init() {
+                    if (typeof Stripe !== 'undefined') {
+                        this.stripe = Stripe('pk_live_51S4R0SRW56Pm3uYI8EKbysm1ok4peVXSD6G17HtFy8BDuG9Carn8Ry7iPVzulMBtdEFcz5pFvXpE04CIgn8PY6WS00aXOqMYEI');
+                        this.elements = this.stripe.elements();
+                        this.card = this.elements.create('card', {
+                            style: {
+                                base: {
+                                    fontSize: '14px',
+                                    color: '#fff',
+                                    fontFamily: 'Inter, sans-serif',
+                                    '::placeholder': {
+                                        color: 'rgba(255,255,255,0.5)'
+                                    }
+                                }
+                            }
+                        });
+                        
+                        const cardElement = document.getElementById('mbx-card-element');
+                        if (cardElement && !cardElement.hasChildNodes()) {
+                            this.card.mount('#mbx-card-element');
+                        }
+                        
+                        this.card.on('change', (event) => {
+                            const errorElement = document.getElementById('mbxCardErr');
+                            if (event.error) {
+                                errorElement.textContent = event.error.message;
+                                errorElement.classList.add('show');
+                            } else {
+                                errorElement.classList.remove('show');
+                            }
+                        });
+                    }
+                }
+
+                open() {
+                    const cardElement = document.getElementById('mbx-card-element');
+                    if (this.card && cardElement && !cardElement.hasChildNodes()) {
+                        this.card.mount('#mbx-card-element');
+                    }
+                    
+                    const backdrop = document.getElementById('mbxModalBackdrop');
+                    backdrop.classList.add('active');
+                    backdrop.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                close() {
+                    const backdrop = document.getElementById('mbxModalBackdrop');
+                    backdrop.classList.remove('active');
+                    backdrop.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                    this.reset();
+                }
+
+                selectAmount(amt) {
+                    this.amount = amt;
+                    document.querySelectorAll('.mbx-amount-btn').forEach(btn => btn.classList.remove('selected'));
+                    if (event && event.target) {
+                        event.target.classList.add('selected');
+                    }
+                }
+
+                selectCustom(val) {
+                    if (val && val > 0) {
+                        this.amount = parseFloat(val);
+                        document.querySelectorAll('.mbx-amount-btn').forEach(btn => btn.classList.remove('selected'));
+                    }
+                }
+
+                validate() {
+                    let valid = true;
+                    
+                    ['mbxFirstName', 'mbxLastName', 'mbxEmail'].forEach(id => {
+                        const field = document.getElementById(id);
+                        const error = document.getElementById(id + 'Err');
+                        
+                        if (!field.value.trim()) {
+                            error.classList.add('show');
+                            valid = false;
+                        } else {
+                            error.classList.remove('show');
+                        }
+                    });
+                    
+                    const email = document.getElementById('mbxEmail');
+                    if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                        document.getElementById('mbxEmailErr').classList.add('show');
+                        valid = false;
+                    }
+                    
+                    return valid;
+                }
+
+                async process() {
+                    if (!this.validate()) return;
+                    
+                    const button = document.querySelector('.mbx-donate-submit');
+                    const text = document.querySelector('.mbx-submit-text');
+                    const loading = document.getElementById('mbxLoading');
+                    
+                    button.disabled = true;
+                    text.style.display = 'none';
+                    loading.classList.add('active');
+                    
+                    try {
+                        // Simulate payment processing for demo
+                        await new Promise(resolve => setTimeout(resolve, 2000));
+                        this.showSuccess();
+                    } catch (error) {
+                        alert(`Payment failed: ${error.message}`);
+                    } finally {
+                        button.disabled = false;
+                        text.style.display = 'inline';
+                        loading.classList.remove('active');
+                    }
+                }
+
+                showSuccess() {
+                    document.getElementById('mbxSuccessMsg').classList.add('show');
+                    setTimeout(() => this.close(), 3000);
+                }
+
+                reset() {
+                    document.querySelectorAll('.mbx-form-input').forEach(input => input.value = '');
+                    document.querySelectorAll('.mbx-error').forEach(error => error.classList.remove('show'));
+                    document.getElementById('mbxSuccessMsg').classList.remove('show');
+                    if (this.card) this.card.clear();
+                }
+            }
+
+            // Global Functions
+            let spartansPayment = null;
+
+            window.openDonateModal = () => {
+                if (!spartansPayment) spartansPayment = new SpartansPaymentController();
+                spartansPayment.open();
+            };
+
+            window.closeDonateModal = () => {
+                if (spartansPayment) spartansPayment.close();
+            };
+
+            window.selectMbxAmount = (amt) => {
+                if (spartansPayment) spartansPayment.selectAmount(amt);
+            };
+
+            window.selectMbxCustom = (val) => {
+                if (spartansPayment) spartansPayment.selectCustom(val);
+            };
+
+            window.processMbxDonation = () => {
+                if (spartansPayment) spartansPayment.process();
+            };
+
+            // Initialize
+            document.addEventListener('DOMContentLoaded', function() {
+                initializeTheme();
+                
+                const yearElement = document.getElementById('mbx-year');
+                if (yearElement) {
+                    yearElement.textContent = new Date().getFullYear();
+                }
+
+                spartansPayment = new SpartansPaymentController();
+
+                // Backdrop click to close
+                document.getElementById('mbxModalBackdrop').addEventListener('click', (e) => {
+                    if (e.target === e.currentTarget) closeDonateModal();
+                });
+
+                // Escape key to close
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        const backdrop = document.getElementById('mbxModalBackdrop');
+                        if (backdrop.classList.contains('active')) {
+                            closeDonateModal();
+                        }
+                    }
+                });
+            });
+
+        })();
+    </script>
+</body>
+</html>

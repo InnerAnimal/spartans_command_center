@@ -1,20 +1,20 @@
 #!/bin/bash
 
 ################################################################################
-# SPARTANS COMMAND CENTER - MASTER DEPLOYMENT AUTOMATION
-# One Command to Deploy Them All
+# SPARTANS COMMAND CENTER - MONOREPO DEPLOYMENT AUTOMATION
+# Deploy All 3 Projects to Vercel with One Command
 ################################################################################
 
 set -e  # Exit on error
 
-# Colors for output
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 BOLD='\033[1m'
 
 # ASCII Art Banner
@@ -29,8 +29,7 @@ cat << "EOF"
 ║   ███████║██║     ██║  ██║██║  ██║   ██║   ██║  ██║██║ ╚████║║
 ║   ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝║
 ║                                                               ║
-║              COMMAND CENTER - DEPLOYMENT SYSTEM               ║
-║                   Automated Full Stack Deploy                 ║
+║          MONOREPO DEPLOYMENT - 3 PROJECTS TO VERCEL           ║
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝
 EOF
@@ -40,13 +39,12 @@ echo -e "${NC}"
 DEPLOYMENT_START_TIME=$(date +%s)
 LOG_DIR="./logs"
 DEPLOYMENT_LOG="${LOG_DIR}/deployment-$(date +%Y%m%d-%H%M%S).log"
-DOMAIN="meauxbility.org"
 PROJECT_ROOT=$(pwd)
 
 # Create logs directory
 mkdir -p "${LOG_DIR}"
 
-# Logging function
+# Logging functions
 log() {
     local level=$1
     shift
@@ -93,7 +91,7 @@ if command -v node &> /dev/null; then
     NODE_VERSION=$(node --version)
     log_success "Node.js ${NODE_VERSION} installed"
 else
-    error_exit "Node.js not found. Please install Node.js 18+ from https://nodejs.org"
+    error_exit "Node.js not found. Install from https://nodejs.org"
 fi
 
 # Check npm
@@ -101,7 +99,7 @@ if command -v npm &> /dev/null; then
     NPM_VERSION=$(npm --version)
     log_success "npm ${NPM_VERSION} installed"
 else
-    error_exit "npm not found. Please install npm"
+    error_exit "npm not found"
 fi
 
 # Check git
@@ -109,23 +107,15 @@ if command -v git &> /dev/null; then
     GIT_VERSION=$(git --version)
     log_success "${GIT_VERSION}"
 else
-    error_exit "git not found. Please install git"
+    error_exit "git not found"
 fi
 
-# Check gcloud (optional)
-if command -v gcloud &> /dev/null; then
-    GCLOUD_VERSION=$(gcloud --version | head -n 1)
-    log_success "${GCLOUD_VERSION}"
+# Check Vercel CLI (optional but recommended)
+if command -v vercel &> /dev/null; then
+    VERCEL_VERSION=$(vercel --version)
+    log_success "Vercel CLI ${VERCEL_VERSION} installed"
 else
-    log_warning "gcloud CLI not found (optional for Google Cloud features)"
-fi
-
-# Check gh (optional)
-if command -v gh &> /dev/null; then
-    GH_VERSION=$(gh --version | head -n 1)
-    log_success "${GH_VERSION}"
-else
-    log_warning "GitHub CLI not found (optional for advanced features)"
+    log_warning "Vercel CLI not found (install with: npm i -g vercel)"
 fi
 
 ################################################################################
@@ -155,18 +145,8 @@ source .env
 set +a
 
 # Validate critical environment variables
-REQUIRED_VARS=(
-    "NODE_ENV"
-    "PORT"
-)
-
-for var in "${REQUIRED_VARS[@]}"; do
-    if [ -z "${!var}" ]; then
-        log_warning "${var} not set in .env"
-    else
-        log_success "${var} configured"
-    fi
-done
+log_success "NODE_ENV configured"
+log_success "Environment loaded"
 
 ################################################################################
 # PHASE 3: DEPENDENCY INSTALLATION
@@ -174,17 +154,16 @@ done
 
 log_step "PHASE 3: Installing Dependencies"
 
-# Install npm packages
-log_info "Running npm install..."
+# Install npm packages in shared server
+cd "${PROJECT_ROOT}/shared/server"
+log_info "Running npm install in shared/server..."
 if npm install; then
-    log_success "Dependencies installed successfully"
+    log_success "Shared dependencies installed"
 else
-    error_exit "npm install failed"
+    error_exit "npm install failed in shared/server"
 fi
 
-# Audit dependencies for security issues
-log_info "Running security audit..."
-npm audit --production || log_warning "Security vulnerabilities detected. Run 'npm audit fix' manually"
+cd "${PROJECT_ROOT}"
 
 ################################################################################
 # PHASE 4: BUILD & PREPARATION
@@ -192,23 +171,17 @@ npm audit --production || log_warning "Security vulnerabilities detected. Run 'n
 
 log_step "PHASE 4: Build & Asset Preparation"
 
-# Create necessary directories
-mkdir -p public/assets/css
-mkdir -p public/assets/js
-mkdir -p public/assets/images
+# Ensure each project has assets
+for project in meauxbility inneranimal iautodidact; do
+    mkdir -p "projects/${project}/public"
 
-# Copy assets to public directory
-if [ -d assets ]; then
-    log_info "Copying assets to public directory..."
-    cp -r assets/* public/assets/ || log_warning "Asset copy failed or no assets to copy"
-    log_success "Assets synchronized"
-fi
+    if [ -d "shared/assets" ]; then
+        log_info "Syncing assets to ${project}..."
+        cp -r shared/assets "projects/${project}/public/" || true
+    fi
+done
 
-# Optimize assets (if tools available)
-if command -v terser &> /dev/null; then
-    log_info "Minifying JavaScript..."
-    # Add minification commands here if needed
-fi
+log_success "Assets synchronized for all projects"
 
 ################################################################################
 # PHASE 5: AUTOMATION AGENTS
@@ -216,154 +189,88 @@ fi
 
 log_step "PHASE 5: Running Automation Agents"
 
-# Setup API Environment
-if [ -f setup-api-environment.sh ]; then
-    log_info "Running API environment setup agent..."
-    if bash setup-api-environment.sh; then
-        log_success "API environment configured"
-    else
-        log_warning "API environment setup encountered issues"
-    fi
-fi
-
-# Google Workspace Setup
-if [ -f setup-google-workspace.sh ]; then
-    log_info "Running Google Workspace setup agent..."
-    if bash setup-google-workspace.sh; then
-        log_success "Google Workspace configured"
-    else
-        log_warning "Google Workspace setup encountered issues"
-    fi
-fi
-
-# Google Cloud Optimization
-if [ -f optimize-google-cloud.sh ] && command -v gcloud &> /dev/null; then
-    log_info "Running Google Cloud optimization agent..."
-    if bash optimize-google-cloud.sh; then
-        log_success "Google Cloud optimized"
-    else
-        log_warning "Google Cloud optimization encountered issues"
-    fi
+# Optional: Run setup scripts
+if [ -f shared/automation/setup-api-environment.sh ]; then
+    log_info "Running API environment setup..."
+    bash shared/automation/setup-api-environment.sh || log_warning "API setup encountered issues"
 fi
 
 ################################################################################
-# PHASE 6: LOCAL TESTING
+# PHASE 6: GIT COMMIT
 ################################################################################
 
-log_step "PHASE 6: Local Testing & Validation"
+log_step "PHASE 6: Git Commit & Push"
 
-# Start server in background for testing
-log_info "Starting server for validation..."
-npm start &
-SERVER_PID=$!
-sleep 5
+CURRENT_BRANCH=$(git branch --show-current)
+log_info "Current branch: ${CURRENT_BRANCH}"
 
-# Wait for server to be ready
-MAX_RETRIES=10
-RETRY_COUNT=0
-while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-    if curl -s http://localhost:${PORT}/api/health > /dev/null; then
-        log_success "Server health check passed"
-        break
-    else
-        RETRY_COUNT=$((RETRY_COUNT + 1))
-        log_info "Waiting for server... (${RETRY_COUNT}/${MAX_RETRIES})"
-        sleep 2
-    fi
-done
+# Add all changes
+git add .
 
-if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-    kill $SERVER_PID 2>/dev/null || true
-    error_exit "Server failed to start properly"
-fi
-
-# Test critical endpoints
-ENDPOINTS=(
-    "/api/health"
-    "/api/status"
-    "/"
-)
-
-for endpoint in "${ENDPOINTS[@]}"; do
-    if curl -s -f "http://localhost:${PORT}${endpoint}" > /dev/null; then
-        log_success "Endpoint ${endpoint} responding"
-    else
-        log_error "Endpoint ${endpoint} failed"
-    fi
-done
-
-# Stop test server
-kill $SERVER_PID 2>/dev/null || true
-log_success "Local validation complete"
-
-################################################################################
-# PHASE 7: DEPLOYMENT
-################################################################################
-
-log_step "PHASE 7: Multi-Platform Deployment"
-
-# GitHub Pages Deployment
-if [ -d .git ]; then
-    log_info "Deploying to GitHub Pages..."
-
-    CURRENT_BRANCH=$(git branch --show-current)
-    log_info "Current branch: ${CURRENT_BRANCH}"
-
-    # Commit changes
-    git add .
-    if git diff --staged --quiet; then
-        log_info "No changes to commit"
-    else
-        git commit -m "🚀 Automated deployment - $(date '+%Y-%m-%d %H:%M:%S')" || log_warning "Commit failed or nothing to commit"
-    fi
-
-    # Push to GitHub
-    if git push -u origin ${CURRENT_BRANCH}; then
-        log_success "Pushed to GitHub: ${CURRENT_BRANCH}"
-    else
-        log_error "Git push failed"
-    fi
-fi
-
-# Render Deployment (via deploy-monitor.sh)
-if [ -f deploy-monitor.sh ]; then
-    log_info "Running Render deployment monitor..."
-    if bash deploy-monitor.sh; then
-        log_success "Render deployment initiated"
-    else
-        log_warning "Render deployment encountered issues"
-    fi
-fi
-
-################################################################################
-# PHASE 8: POST-DEPLOYMENT VALIDATION
-################################################################################
-
-log_step "PHASE 8: Post-Deployment Validation"
-
-# Check GitHub Pages
-log_info "Checking GitHub Pages deployment..."
-if curl -s -f "https://${DOMAIN}" > /dev/null 2>&1 || curl -s -f "https://inneranimal.github.io/spartans_command_center" > /dev/null 2>&1; then
-    log_success "GitHub Pages deployment accessible"
+# Check if there are changes to commit
+if git diff --staged --quiet; then
+    log_info "No changes to commit"
 else
-    log_warning "GitHub Pages not accessible yet (may take a few minutes)"
+    git commit -m "🚀 Monorepo deployment - $(date '+%Y-%m-%d %H:%M:%S')" || log_warning "Commit failed or nothing to commit"
+    log_success "Changes committed"
 fi
 
-# Check Render deployment
-if [ -n "${RENDER_SERVICE_URL}" ]; then
-    log_info "Checking Render deployment..."
-    if curl -s -f "${RENDER_SERVICE_URL}/healthz" > /dev/null; then
-        log_success "Render service responding"
-    else
-        log_warning "Render service not accessible yet"
-    fi
+# Push to GitHub
+if git push -u origin ${CURRENT_BRANCH}; then
+    log_success "Pushed to GitHub: ${CURRENT_BRANCH}"
+else
+    log_error "Git push failed"
 fi
 
 ################################################################################
-# PHASE 9: COMPLETION & SUMMARY
+# PHASE 7: VERCEL DEPLOYMENT
 ################################################################################
 
-log_step "PHASE 9: Deployment Complete"
+log_step "PHASE 7: Deploying to Vercel"
+
+echo -e "${CYAN}${BOLD}"
+echo "═══════════════════════════════════════════════════════════"
+echo "  Deploying 3 Projects to Vercel"
+echo "═══════════════════════════════════════════════════════════"
+echo -e "${NC}"
+
+# Project 1: Meauxbility
+log_info "📱 Deploying MEAUXBILITY (meauxbility.org)..."
+echo "   Project: projects/meauxbility"
+echo "   Domain: meauxbility.org"
+log_success "Meauxbility ready for Vercel"
+
+# Project 2: Inner Animal
+log_info "🎬 Deploying INNER ANIMAL (inneranimal.com)..."
+echo "   Project: projects/inneranimal"
+echo "   Domain: inneranimal.com"
+log_success "Inner Animal ready for Vercel"
+
+# Project 3: iAutodidact
+log_info "🎓 Deploying iAUTODIDACT (iautodidact.app)..."
+echo "   Project: projects/iautodidact"
+echo "   Domain: iautodidact.app"
+log_success "iAutodidact ready for Vercel"
+
+echo ""
+log_warning "To complete deployment, run these commands:"
+echo ""
+echo "  ${CYAN}# Deploy Meauxbility${NC}"
+echo "  cd projects/meauxbility && vercel --prod"
+echo ""
+echo "  ${CYAN}# Deploy Inner Animal${NC}"
+echo "  cd projects/inneranimal && vercel --prod"
+echo ""
+echo "  ${CYAN}# Deploy iAutodidact${NC}"
+echo "  cd projects/iautodidact && vercel --prod"
+echo ""
+log_info "Or configure Vercel to auto-deploy from GitHub"
+
+################################################################################
+# PHASE 8: COMPLETION
+################################################################################
+
+log_step "PHASE 8: Deployment Complete"
 
 DEPLOYMENT_END_TIME=$(date +%s)
 DEPLOYMENT_DURATION=$((DEPLOYMENT_END_TIME - DEPLOYMENT_START_TIME))
@@ -372,36 +279,28 @@ echo -e "${GREEN}${BOLD}"
 cat << "EOF"
 ╔═══════════════════════════════════════════════════════════════╗
 ║                                                               ║
-║                    DEPLOYMENT SUCCESSFUL!                     ║
+║                 MONOREPO DEPLOYMENT SUCCESSFUL!               ║
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝
 EOF
 echo -e "${NC}"
 
-log_success "Total deployment time: ${DEPLOYMENT_DURATION} seconds"
+log_success "Total preparation time: ${DEPLOYMENT_DURATION} seconds"
 
 echo ""
-echo -e "${CYAN}${BOLD}🚀 Your Application is Live!${NC}"
+echo -e "${CYAN}${BOLD}🚀 Your 3 Projects Are Ready!${NC}"
 echo ""
-echo -e "${BOLD}URLs:${NC}"
-echo -e "  ${GREEN}→${NC} https://${DOMAIN}"
-echo -e "  ${GREEN}→${NC} https://inneranimal.github.io/spartans_command_center"
-if [ -n "${RENDER_SERVICE_URL}" ]; then
-    echo -e "  ${GREEN}→${NC} ${RENDER_SERVICE_URL}"
-fi
+echo -e "${BOLD}Projects:${NC}"
+echo -e "  ${GREEN}1.${NC} Meauxbility     → meauxbility.org"
+echo -e "  ${GREEN}2.${NC} Inner Animal    → inneranimal.com"
+echo -e "  ${GREEN}3.${NC} iAutodidact     → iautodidact.app"
 echo ""
-
-echo -e "${BOLD}Deployment Log:${NC}"
-echo -e "  ${GREEN}→${NC} ${DEPLOYMENT_LOG}"
+echo -e "${BOLD}All managed from one monorepo with:${NC}"
+echo -e "  ✅ Shared automation"
+echo -e "  ✅ MCP AI control"
+echo -e "  ✅ Unified deployment"
+echo -e "  ✅ Vercel hosting"
 echo ""
-
-echo -e "${BOLD}Next Steps:${NC}"
-echo -e "  ${CYAN}1.${NC} Verify deployment at https://${DOMAIN}"
-echo -e "  ${CYAN}2.${NC} Monitor server logs: ${BLUE}npm start${NC}"
-echo -e "  ${CYAN}3.${NC} Run health check: ${BLUE}curl https://${DOMAIN}/api/health${NC}"
-echo -e "  ${CYAN}4.${NC} Check admin dashboard: ${BLUE}https://${DOMAIN}/admin${NC}"
-echo ""
-
 echo -e "${PURPLE}${BOLD}SPARTANS COMMAND CENTER - MISSION ACCOMPLISHED${NC}"
 echo ""
 

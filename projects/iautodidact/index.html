@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iAutodidact - Self-Directed Learning Platform</title>
+    <meta name="description" content="iAutodidact - Empower your learning journey with AI-powered education">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideIn 1s ease-out;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            margin-top: 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .tech-stack {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tech-stack span {
+            display: inline-block;
+            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 iAutodidact</h1>
+        <p class="tagline">Empower Your Learning Journey with AI-Powered Education</p>
+
+        <div class="status-badge">🚀 Platform Under Development</div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">📚</div>
+                <h3>Self-Directed Learning</h3>
+                <p>Learn at your own pace with personalized pathways</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🤖</div>
+                <h3>AI-Powered Courses</h3>
+                <p>Intelligent course recommendations and adaptive learning</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h3>Skill Tracking</h3>
+                <p>Monitor your progress and achievements</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🌐</div>
+                <h3>Interactive Platform</h3>
+                <p>Engage with content through modern web experiences</p>
+            </div>
+        </div>
+
+        <div class="tech-stack">
+            <p style="opacity: 0.8; margin-bottom: 1rem;">Powered by:</p>
+            <span>Vercel</span>
+            <span>Supabase</span>
+            <span>MCP AI Control</span>
+            <span>Express.js</span>
+        </div>
+
+        <p style="margin-top: 2rem; opacity: 0.6; font-size: 0.85rem;">
+            Part of the Spartans Command Center Monorepo
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Spartans Command Center</title>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        /* Services Page Specific Styles */
+        .services-hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, var(--spartans-light) 0%, var(--spartans-light-gray) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(74,171,184,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .services-hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .services-hero-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            letter-spacing: -0.03em;
+            color: var(--spartans-dark);
+        }
+
+        .services-gradient-text {
+            background: linear-gradient(135deg, var(--spartans-primary), var(--spartans-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .services-hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--spartans-gray);
+            margin-bottom: 48px;
+            line-height: 1.7;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Service Categories */
+        .service-categories {
+            padding: 100px 0;
+            background: var(--spartans-light);
+        }
+
+        .service-category {
+            margin-bottom: 80px;
+        }
+
+        .service-category-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .service-category-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--spartans-dark);
+        }
+
+        .service-category-subtitle {
+            font-size: 1.25rem;
+            color: var(--spartans-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .service-card {
+            background: var(--spartans-light);
+            border: 2px solid rgba(74, 171, 184, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--spartans-primary), var(--spartans-accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--spartans-primary);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--spartans-primary);
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--spartans-dark);
+        }
+
+        .service-description {
+            color: var(--spartans-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .service-features li {
+            padding: 0.5rem 0;
+            color: var(--spartans-gray);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--spartans-primary);
+            font-weight: 600;
+        }
+
+        .service-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--spartans-primary);
+            margin-bottom: 1rem;
+        }
+
+        .service-cta {
+            background: linear-gradient(135deg, var(--spartans-primary), var(--spartans-accent));
+            color: var(--spartans-dark);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .service-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(74, 171, 184, 0.3);
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 100px 0;
+            background: var(--spartans-light-gray);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--spartans-primary), var(--spartans-accent));
+            color: var(--spartans-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0 auto 1.5rem;
+        }
+
+        .process-step-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--spartans-dark);
+        }
+
+        .process-step-description {
+            color: var(--spartans-gray);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .services-cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--spartans-dark) 0%, var(--spartans-secondary) 100%);
+            text-align: center;
+        }
+
+        .services-cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .services-cta-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            color: var(--spartans-light);
+        }
+
+        .services-cta-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .services-cta-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--spartans-primary), var(--spartans-accent));
+            color: var(--spartans-dark);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--spartans-light);
+            border: 2px solid var(--spartans-primary);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-cta-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="mbx-nav">
+        <div class="mbx-nav-container">
+            <a href="/" class="mbx-nav-logo">
+                <div class="mbx-logo-icon">⚡</div>
+                <span class="mbx-logo-text">Spartans Command Center</span>
+            </a>
+            
+            <div class="mbx-nav-menu">
+                <a href="/" class="mbx-nav-link">Home</a>
+                <a href="/about" class="mbx-nav-link">About</a>
+                <a href="/services" class="mbx-nav-link active">Services</a>
+                <a href="/portfolio" class="mbx-nav-link">Portfolio</a>
+                <a href="/team" class="mbx-nav-link">Team</a>
+                <a href="/contact" class="mbx-nav-link">Contact</a>
+                <a href="/admin" class="mbx-nav-link admin-link">Command Center</a>
+            </div>
+            
+            <button class="mbx-nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Services Hero -->
+    <section class="services-hero">
+        <div class="services-hero-container">
+            <h1 class="services-hero-title">
+                Elite <span class="services-gradient-text">Development Services</span>
+            </h1>
+            <p class="services-hero-subtitle">
+                We deliver cutting-edge solutions that transform your digital presence. 
+                From concept to deployment, our elite team ensures exceptional results 
+                that drive business growth and user engagement.
+            </p>
+        </div>
+    </section>
+
+    <!-- Web Development Services -->
+    <section class="service-categories">
+        <div class="mbx-container">
+            <div class="service-category">
+                <div class="service-category-header">
+                    <h2 class="service-category-title">Web Development</h2>
+                    <p class="service-category-subtitle">
+                        Custom web applications built with modern technologies and best practices
+                    </p>
+                </div>
+                
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🌐</div>
+                        <h3 class="service-title">Frontend Development</h3>
+                        <p class="service-description">
+                            Responsive, interactive user interfaces built with React, Next.js, and modern CSS frameworks.
+                        </p>
+                        <ul class="service-features">
+                            <li>React & Next.js Applications</li>
+                            <li>Responsive Design</li>
+                            <li>Performance Optimization</li>
+                            <li>Accessibility Compliance</li>
+                        </ul>
+                        <div class="service-price">Starting at $5,000</div>
+                        <button class="service-cta" onclick="openContactModal('frontend')">Get Quote</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">⚙️</div>
+                        <h3 class="service-title">Backend Development</h3>
+                        <p class="service-description">
+                            Scalable server-side applications with robust APIs and database integration.
+                        </p>
+                        <ul class="service-features">
+                            <li>Node.js & Express</li>
+                            <li>RESTful APIs</li>
+                            <li>Database Design</li>
+                            <li>Authentication Systems</li>
+                        </ul>
+                        <div class="service-price">Starting at $7,500</div>
+                        <button class="service-cta" onclick="openContactModal('backend')">Get Quote</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">📱</div>
+                        <h3 class="service-title">Full-Stack Solutions</h3>
+                        <p class="service-description">
+                            Complete web applications from frontend to backend with seamless integration.
+                        </p>
+                        <ul class="service-features">
+                            <li>End-to-End Development</li>
+                            <li>Cloud Deployment</li>
+                            <li>CI/CD Pipeline</li>
+                            <li>Ongoing Support</li>
+                        </ul>
+                        <div class="service-price">Starting at $15,000</div>
+                        <button class="service-cta" onclick="openContactModal('fullstack')">Get Quote</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Integration Services -->
+            <div class="service-category">
+                <div class="service-category-header">
+                    <h2 class="service-category-title">AI Integration</h2>
+                    <p class="service-category-subtitle">
+                        Intelligent automation and AI-powered features for enhanced user experiences
+                    </p>
+                </div>
+                
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🤖</div>
+                        <h3 class="service-title">ChatGPT Integration</h3>
+                        <p class="service-description">
+                            Seamless integration of OpenAI's ChatGPT for intelligent customer support and automation.
+                        </p>
+                        <ul class="service-features">
+                            <li>Custom AI Chatbots</li>
+                            <li>Content Generation</li>
+                            <li>Customer Support</li>
+                            <li>API Integration</li>
+                        </ul>
+                        <div class="service-price">Starting at $3,000</div>
+                        <button class="service-cta" onclick="openContactModal('chatgpt')">Get Quote</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🧠</div>
+                        <h3 class="service-title">Claude AI Integration</h3>
+                        <p class="service-description">
+                            Advanced AI capabilities using Anthropic's Claude for complex reasoning and analysis.
+                        </p>
+                        <ul class="service-features">
+                            <li>Advanced Reasoning</li>
+                            <li>Document Analysis</li>
+                            <li>Code Generation</li>
+                            <li>Custom Workflows</li>
+                        </ul>
+                        <div class="service-price">Starting at $4,000</div>
+                        <button class="service-cta" onclick="openContactModal('claude')">Get Quote</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">⚡</div>
+                        <h3 class="service-title">Custom AI Solutions</h3>
+                        <p class="service-description">
+                            Tailored AI implementations designed specifically for your business needs.
+                        </p>
+                        <ul class="service-features">
+                            <li>Custom Models</li>
+                            <li>Machine Learning</li>
+                            <li>Data Analysis</li>
+                            <li>Predictive Analytics</li>
+                        </ul>
+                        <div class="service-price">Starting at $10,000</div>
+                        <button class="service-cta" onclick="openContactModal('custom-ai')">Get Quote</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cloud & DevOps Services -->
+            <div class="service-category">
+                <div class="service-category-header">
+                    <h2 class="service-category-title">Cloud & DevOps</h2>
+                    <p class="service-category-subtitle">
+                        Scalable cloud infrastructure and automated deployment pipelines
+                    </p>
+                </div>
+                
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="service-icon">☁️</div>
+                        <h3 class="service-title">Cloud Setup</h3>
+                        <p class="service-description">
+                            Complete cloud infrastructure setup on AWS, Google Cloud, or Azure platforms.
+                        </p>
+                        <ul class="service-features">
+                            <li>Server Configuration</li>
+                            <li>Database Setup</li>
+                            <li>Security Implementation</li>
+                            <li>Monitoring Setup</li>
+                        </ul>
+                        <div class="service-price">Starting at $2,500</div>
+                        <button class="service-cta" onclick="openContactModal('cloud')">Get Quote</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🚀</div>
+                        <h3 class="service-title">DevOps Pipeline</h3>
+                        <p class="service-description">
+                            Automated CI/CD pipelines for efficient development and deployment workflows.
+                        </p>
+                        <ul class="service-features">
+                            <li>GitHub Actions</li>
+                            <li>Docker Containers</li>
+                            <li>Automated Testing</li>
+                            <li>Zero-Downtime Deployments</li>
+                        </ul>
+                        <div class="service-price">Starting at $3,500</div>
+                        <button class="service-cta" onclick="openContactModal('devops')">Get Quote</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">🔧</div>
+                        <h3 class="service-title">Infrastructure Management</h3>
+                        <p class="service-description">
+                            Ongoing management and optimization of your cloud infrastructure.
+                        </p>
+                        <ul class="service-features">
+                            <li>24/7 Monitoring</li>
+                            <li>Performance Optimization</li>
+                            <li>Security Updates</li>
+                            <li>Cost Optimization</li>
+                        </ul>
+                        <div class="service-price">Starting at $1,500/month</div>
+                        <button class="service-cta" onclick="openContactModal('infrastructure')">Get Quote</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="mbx-container">
+            <div class="service-category-header">
+                <h2 class="service-category-title">Our Development Process</h2>
+                <p class="service-category-subtitle">
+                    A proven methodology that ensures successful project delivery
+                </p>
+            </div>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="process-step-number">1</div>
+                    <h3 class="process-step-title">Discovery & Planning</h3>
+                    <p class="process-step-description">
+                        We start by understanding your business goals, technical requirements, and user needs to create a comprehensive project plan.
+                    </p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-step-number">2</div>
+                    <h3 class="process-step-title">Design & Architecture</h3>
+                    <p class="process-step-description">
+                        Our team designs the user experience and technical architecture, ensuring scalability and maintainability.
+                    </p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-step-number">3</div>
+                    <h3 class="process-step-title">Development & Testing</h3>
+                    <p class="process-step-description">
+                        We build your solution using agile methodologies with continuous testing and quality assurance.
+                    </p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-step-number">4</div>
+                    <h3 class="process-step-title">Deployment & Support</h3>
+                    <p class="process-step-description">
+                        We deploy your solution and provide ongoing support to ensure optimal performance and reliability.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="services-cta">
+        <div class="services-cta-content">
+            <h2 class="services-cta-title">Ready to Transform Your Digital Presence?</h2>
+            <p class="services-cta-subtitle">
+                Let's discuss your project and create something extraordinary together. 
+                Our elite team is ready to deliver exceptional results.
+            </p>
+            <div class="services-cta-actions">
+                <a href="/contact" class="cta-button cta-primary">Start Your Project</a>
+                <a href="/portfolio" class="cta-button cta-secondary">View Our Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mbx-footer">
+        <div class="mbx-footer-container">
+            <div class="mbx-footer-content">
+                <div class="mbx-footer-section">
+                    <h3>Spartans Command Center</h3>
+                    <p>Elite development solutions for the modern digital world.</p>
+                    <div class="mbx-footer-social">
+                        <a href="#" class="mbx-social-link">GitHub</a>
+                        <a href="#" class="mbx-social-link">LinkedIn</a>
+                        <a href="#" class="mbx-social-link">Twitter</a>
+                    </div>
+                </div>
+                
+                <div class="mbx-footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="/services">Web Development</a></li>
+                        <li><a href="/services">AI Integration</a></li>
+                        <li><a href="/services">Cloud Solutions</a></li>
+                        <li><a href="/services">Payment Systems</a></li>
+                    </ul>
+                </div>
+                
+                <div class="mbx-footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/team">Our Team</a></li>
+                        <li><a href="/portfolio">Portfolio</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="mbx-footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/docs">Documentation</a></li>
+                        <li><a href="/support">Support</a></li>
+                        <li><a href="/admin">Command Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mbx-footer-bottom">
+                <p>&copy; <span id="mbx-year">2025</span> Spartans Command Center. All rights reserved.</p>
+                <div class="mbx-footer-links">
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Services page functionality
+        (function() {
+            'use strict';
+
+            // Mobile navigation
+            document.getElementById('navToggle').addEventListener('click', function() {
+                document.querySelector('.mbx-nav-menu').classList.toggle('active');
+            });
+
+            // Contact modal functionality
+            window.openContactModal = function(serviceType) {
+                // This would open a contact modal for the specific service
+                alert(`Contact modal for ${serviceType} service would be implemented here!`);
+            };
+
+            // Initialize
+            document.addEventListener('DOMContentLoaded', function() {
+                const yearElement = document.getElementById('mbx-year');
+                if (yearElement) {
+                    yearElement.textContent = new Date().getFullYear();
+                }
+            });
+
+        })();
+    </script>
+</body>
+</html>
